@@ -6,16 +6,51 @@ use App\Entity\Group;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class GroupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('IdBook')
-            ->add('IdUser')
-            ->add('CreationDate')
-            ->add('ReunionDate')
+            ->add('IdBook', IntegerType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'min' => 1,
+                    'max' => 50
+                ],
+                'label' => 'id book',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'constraints' => [
+                    new Assert\Positive(),
+                    new Assert\LessThan(51)
+                ]
+            ])
+            ->add('IdUser', IntegerType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'min' => 1,
+                    'max' => 50
+                ],
+                'label' => 'id user',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'constraints' => [
+                    new Assert\Positive(),
+                    new Assert\LessThan(51)
+                ]
+            ])
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary mt-4'
+                ],
+                'label' => 'Group'
+            ])
         ;
     }
 

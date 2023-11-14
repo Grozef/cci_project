@@ -17,11 +17,11 @@ class UserController extends AbstractController
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render('pages/user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
     }
-
+/* doublon avec inscription ?
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -36,16 +36,16 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('user/new.html.twig', [
+        return $this->render('pages/user/new.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
     }
-
+*/
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
-        return $this->render('user/show.html.twig', [
+        return $this->render('pages/user/show.html.twig', [
             'user' => $user,
         ]);
     }
@@ -62,7 +62,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('user/edit.html.twig', [
+        return $this->render('pages/user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
@@ -74,6 +74,11 @@ class UserController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre compte a été supprimé avec succés !'
+            );
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);

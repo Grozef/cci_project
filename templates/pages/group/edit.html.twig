@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Group</h1>
 
-    {{ include('group/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('pages/group/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('app_group_index') }}">back to list</a>
 
-    {{ include('group/_delete_form.html.twig') }}
+    {{ include('pages/group/_delete_form.html.twig') }}
 {% endblock %}

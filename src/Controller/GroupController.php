@@ -17,7 +17,7 @@ class GroupController extends AbstractController
     #[Route('/', name: 'app_group_index', methods: ['GET'])]
     public function index(GroupRepository $groupRepository): Response
     {
-        return $this->render('group/index.html.twig', [
+        return $this->render('pages/group/index.html.twig', [
             'groups' => $groupRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ class GroupController extends AbstractController
             return $this->redirectToRoute('app_group_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('group/new.html.twig', [
+        return $this->render('pages/group/new.html.twig', [
             'group' => $group,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ class GroupController extends AbstractController
     #[Route('/{id}', name: 'app_group_show', methods: ['GET'])]
     public function show(Group $group): Response
     {
-        return $this->render('group/show.html.twig', [
+        return $this->render('pages/group/show.html.twig', [
             'group' => $group,
         ]);
     }
@@ -59,10 +59,15 @@ class GroupController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Votre groupe a été modifié avec succès !'
+            );
+
             return $this->redirectToRoute('app_group_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('group/edit.html.twig', [
+        return $this->render('pages/group/edit.html.twig', [
             'group' => $group,
             'form' => $form,
         ]);
@@ -74,6 +79,11 @@ class GroupController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$group->getId(), $request->request->get('_token'))) {
             $entityManager->remove($group);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre groupe a été supprimé avec succès !'
+            );
         }
 
         return $this->redirectToRoute('app_group_index', [], Response::HTTP_SEE_OTHER);

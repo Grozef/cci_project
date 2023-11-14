@@ -17,7 +17,7 @@ class UserInfoController extends AbstractController
     #[Route('/', name: 'app_user_info_index', methods: ['GET'])]
     public function index(UserInfoRepository $userInfoRepository): Response
     {
-        return $this->render('user_info/index.html.twig', [
+        return $this->render('pages/user_info/index.html.twig', [
             'user_infos' => $userInfoRepository->findAll(),
         ]);
     }
@@ -33,10 +33,15 @@ class UserInfoController extends AbstractController
             $entityManager->persist($userInfo);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Vos nouvelles informations ont bien été sauvegardées !'
+            );
+
             return $this->redirectToRoute('app_user_info_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('user_info/new.html.twig', [
+        return $this->render('pages/user_info/new.html.twig', [
             'user_info' => $userInfo,
             'form' => $form,
         ]);
@@ -59,10 +64,15 @@ class UserInfoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Vos informations ont bien été modifiées !'
+            );
+
             return $this->redirectToRoute('app_user_info_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('user_info/edit.html.twig', [
+        return $this->render('pages/user_info/edit.html.twig', [
             'user_info' => $userInfo,
             'form' => $form,
         ]);
@@ -74,6 +84,11 @@ class UserInfoController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$userInfo->getId(), $request->request->get('_token'))) {
             $entityManager->remove($userInfo);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Vos informations ont bien été supprimées !'
+            );
         }
 
         return $this->redirectToRoute('app_user_info_index', [], Response::HTTP_SEE_OTHER);

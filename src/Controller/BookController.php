@@ -17,7 +17,7 @@ class BookController extends AbstractController
     #[Route('/', name: 'app_book_index', methods: ['GET'])]
     public function index(BookRepository $bookRepository): Response
     {
-        return $this->render('book/index.html.twig', [
+        return $this->render('pages/book/index.html.twig', [
             'books' => $bookRepository->findAll(),
         ]);
     }
@@ -33,10 +33,15 @@ class BookController extends AbstractController
             $entityManager->persist($book);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Vous avez bien ajouté votre livre !'
+            );
+
             return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('book/new.html.twig', [
+        return $this->render('pages/book/new.html.twig', [
             'book' => $book,
             'form' => $form,
         ]);
@@ -45,7 +50,7 @@ class BookController extends AbstractController
     #[Route('/{id}', name: 'app_book_show', methods: ['GET'])]
     public function show(Book $book): Response
     {
-        return $this->render('book/show.html.twig', [
+        return $this->render('pages/book/show.html.twig', [
             'book' => $book,
         ]);
     }
@@ -59,10 +64,15 @@ class BookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Vous avez bien modifié votre livre !'
+            );
+
             return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('book/edit.html.twig', [
+        return $this->render('pages/book/edit.html.twig', [
             'book' => $book,
             'form' => $form,
         ]);
@@ -74,6 +84,11 @@ class BookController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$book->getId(), $request->request->get('_token'))) {
             $entityManager->remove($book);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Vous avez bien supprimé votre livre !'
+            );
         }
 
         return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
