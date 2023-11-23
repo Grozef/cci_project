@@ -1,0 +1,26 @@
+connexion vm docker symfony
+.env
+DATABASE_URL=mysql://myuser:mypassword@mysql_container:3306/mydatabase
+
+doctrine.yaml
+
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+        # configure these for your database server
+        driver: 'pdo_mysql'
+        server_version: '5.7'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+
+services.yaml
+
+parameters:
+        database_host: '%env(resolve:MYSQL_HOST)%'
+        database_port: '%env(resolve:MYSQL_PORT)%'
+        database_name: '%env(resolve:MYSQL_DATABASE)%'
+        database_user: '%env(resolve:MYSQL_USER)%'
+        database_password: '%env(resolve:MYSQL_PASSWORD)%'
+
