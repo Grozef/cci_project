@@ -21,7 +21,7 @@ class UserController extends AbstractController
             'users' => $userRepository->findAll(),
         ]);
     }
-/* doublon avec inscription ?
+
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -41,7 +41,7 @@ class UserController extends AbstractController
             'form' => $form,
         ]);
     }
-*/
+
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
