@@ -14,24 +14,36 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $name_cat = null;
 
-    /**
-     * Get the value of name
-     */ 
-    public function getName()
+    #[ORM\Column]
+    private ?int $idBook = null;    
+
+    public function getId(): ?int
     {
-        return $this->name;
+        return $this->id;
     }
 
-    /**
-     * Set the value of name
-     *
-     * @return  self
-     */ 
-    public function setName($name)
+    public function getName()
     {
-        $this->name = $name;
+        return $this->name_cat;
+    }
+
+    public function setName($name_cat)
+    {
+        $this->name_cat = $name_cat;
+
+        return $this;
+    }
+
+    public function getIdBook()
+    {
+        return $this->idBook;
+    }
+
+    public function setIdBook($idBook)
+    {
+        $this->idBook = $idBook;
 
         return $this;
     }

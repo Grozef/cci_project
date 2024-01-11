@@ -13,6 +13,9 @@ class UserInfo
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column]
+    private ?int $idUser = null;
+
     #[ORM\Column(length: 255)]
     private ?string $direction = null;
 
@@ -33,6 +36,18 @@ class UserInfo
         return $this->id;
     }
 
+    public function getIdUser()
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser($idUser)
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
+        
     public function getDirection(): ?string
     {
         return $this->direction;
@@ -92,4 +107,6 @@ class UserInfo
 
         return $this;
     }
+
+
 }

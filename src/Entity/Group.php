@@ -18,14 +18,11 @@ class Group
     #[ORM\Column]
     private ?int $IdBook = null;
 
-    #[ORM\Column]
-    private ?int $IdUser = null;
+    #[ORM\Column(length: 255)]
+    private ?string $name_group = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $CreationDate = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $ReunionDate = null;
 
     public function getId(): ?int
     {
@@ -44,14 +41,14 @@ class Group
         return $this;
     }
 
-    public function getIdUser(): ?int
+    public function getName_group()
     {
-        return $this->IdUser;
+        return $this->name_group;
     }
 
-    public function setIdUser(int $IdUser): static
+    public function setName_group($name_group)
     {
-        $this->IdUser = $IdUser;
+        $this->name_group = $name_group;
 
         return $this;
     }
@@ -68,15 +65,4 @@ class Group
         return $this;
     }
 
-    public function getReunionDate(): ?\DateTimeInterface
-    {
-        return $this->ReunionDate;
-    }
-
-    public function setReunionDate(\DateTimeInterface $ReunionDate): static
-    {
-        $this->ReunionDate = $ReunionDate;
-
-        return $this;
-    }
 }

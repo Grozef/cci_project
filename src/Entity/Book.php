@@ -25,6 +25,12 @@ class Book
     #[ORM\Column]
     private ?float $price = null;
 
+    #[ORM\Column]
+    private ?int $id_category = null;
+
+    #[ORM\Column]
+    private ?int $id_awarded = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +80,30 @@ class Book
     public function setPrice(float $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getId_category()
+    {
+        return $this->id_category;
+    }
+
+    public function setId_category($id_category)
+    {
+        $this->id_category = $id_category;
+
+        return $this;
+    }
+
+    public function getId_awarded()
+    {
+        return $this->id_awarded;
+    }
+
+    public function setId_awarded($id_awarded)
+    {
+        $this->id_awarded = $id_awarded;
 
         return $this;
     }
