@@ -6,6 +6,12 @@
 {% block body %}
     <div class="container">
         <h1 class="mt-4">Formulaire de connexion</h1>
+        
+        {% if app.flashes('danger') is not empty %}
+            <div class="alert alert-danger mt-4">
+                {{ app.flashes('danger')|join('<br>') }}
+            </div>
+        {% endif %}
 
         {% for message in app.flashes('success') %}
             <div class="alert alert-success mt-4">

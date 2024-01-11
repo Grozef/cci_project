@@ -54,7 +54,7 @@ class AppFixtures extends Fixture
                 ->setAuthor ($this->faker->word())
                 ->setDescription ($this->faker->word())
                 ->setPrice(mt_rand(0, 30))
-                ->setIdAwarded(mt_rand(1, 3));
+                ->setId_awarded(mt_rand(1, 3));
 
                 $books[] = $book;
                 $manager->persist($book);
