@@ -16,7 +16,7 @@ class Group
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $IdBook = null;
+    private ?int $id_book = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name_group = null;
@@ -28,19 +28,6 @@ class Group
     {
         return $this->id;
     }
-
-    public function getIdBook(): ?int
-    {
-        return $this->IdBook;
-    }
-
-    public function setIdBook(int $IdBook): static
-    {
-        $this->IdBook = $IdBook;
-
-        return $this;
-    }
-
     public function getName_group()
     {
         return $this->name_group;
@@ -65,4 +52,15 @@ class Group
         return $this;
     }
 
+    public function getId_book()
+    {
+        return $this->id_book;
+    }
+
+    public function setId_book($id_book)
+    {
+        $this->id_book = $id_book;
+
+        return $this;
+    }
 }

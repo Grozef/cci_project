@@ -18,15 +18,15 @@ class SecurityController extends AbstractController
     #[Route('/connexion', name: 'security.login', methods: ['GET', 'POST'])]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {   
-        if ($error = $authenticationUtils->getLastAuthenticationError()) {
-            // L'authentification a échoué, ajout d'un message flash
-            $this->addFlash('danger', 'Identifiant ou mot de passe incorrect.');
-        }
+        $lastUsername = $authenticationUtils->getLastUsername();
+        $error = $authenticationUtils->getLastAuthenticationError();
+
         return $this->render('pages/security/login.html.twig', [
-            'last_username' => $authenticationUtils->getLastUsername(),
+
+            'last_username' => $lastUsername,
             'error' => $error,
+           // dd($error, $lastUsername)
         ]);
-        
     }
 
         //this controller allows us to logout

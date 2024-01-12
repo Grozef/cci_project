@@ -1,29 +1,4 @@
--- MySQL Workbench Forward Engineering
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
--- -----------------------------------------------------
--- Schema superbouquin
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema superbouquin
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `superbouquin` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `mydb` ;
-
--- -----------------------------------------------------
--- Table `superbouquin`.`book`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `superbouquin`.`book` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -48,8 +23,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`asso_cat` (
   `id_cat` INT NULL,
   `id_book` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_asso_cat_book1_idx` (`id_book` ASC) VISIBLE,
-  CONSTRAINT `fk_asso_cat_book1`
+  CONSTRAINT `fk_asso_cat_book`
     FOREIGN KEY (`id_book`)
     REFERENCES `superbouquin`.`book` (`id`)
     ON DELETE NO ACTION
@@ -65,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`asso_award` (
   `id_award` INT NULL,
   `id_book` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_asso_award_book1_idx` (`id_book` ASC) VISIBLE,
   CONSTRAINT `fk_asso_award_book1`
     FOREIGN KEY (`id_book`)
     REFERENCES `superbouquin`.`book` (`id`)
@@ -102,7 +75,6 @@ CREATE TABLE IF NOT EXISTS `superbouquin`.`user` (
   `name` VARCHAR(255) NOT NULL,
   `pseudonym` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `UNIQ_8D93D649E7927C74` (`email` ASC) VISIBLE,
   CONSTRAINT `fk_user_user_info1`
     FOREIGN KEY (`id`)
     REFERENCES `superbouquin`.`user_info` (`id`)
@@ -122,7 +94,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ingroup` (
   `id_group` INT NULL,
   `id_user` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_ingroup_user_idx` (`id_user` ASC) VISIBLE,
   CONSTRAINT `fk_ingroup_user`
     FOREIGN KEY (`id_user`)
     REFERENCES `superbouquin`.`user` (`id`)

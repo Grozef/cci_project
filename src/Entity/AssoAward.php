@@ -47,4 +47,5 @@ class AssoAward
 
         return $this;
     }
+
 }
