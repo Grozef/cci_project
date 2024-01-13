@@ -13,9 +13,6 @@ class UserInfo
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $idUser = null;
-
     #[ORM\Column(length: 255)]
     private ?string $direction = null;
 
@@ -31,21 +28,13 @@ class UserInfo
     #[ORM\Column]
     private ?int $tel = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $id_user = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdUser()
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser($idUser)
-    {
-        $this->idUser = $idUser;
-
-        return $this;
     }
         
     public function getDirection(): ?string
@@ -104,6 +93,18 @@ class UserInfo
     public function setTel(int $tel): static
     {
         $this->tel = $tel;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?User
+    {
+        return $this->id_user;
+    }
+
+    public function setIdUser(User $id_user): static
+    {
+        $this->id_user = $id_user;
 
         return $this;
     }

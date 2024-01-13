@@ -17,11 +17,13 @@ class TheReunion
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_reunion = null;
 
-    #[ORM\Column]
-    private ?int $id_group = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Group $id_group = null;
 
-    #[ORM\Column]
-    private ?int $id_place = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ThePlace $id_place = null;
 
     public function getId(): ?int
     {
@@ -40,27 +42,28 @@ class TheReunion
         return $this;
     }
 
-    public function getIdGroup(): ?int
+    public function getIdGroup(): ?Group
     {
         return $this->id_group;
     }
 
-    public function setIdGroup(int $id_group): static
+    public function setIdGroup(Group $id_group): static
     {
         $this->id_group = $id_group;
 
         return $this;
     }
 
-    public function getIdPlace(): ?int
+    public function getIdPlace(): ?ThePlace
     {
         return $this->id_place;
     }
 
-    public function setIdPlace(int $id_place): static
+    public function setIdPlace(ThePlace $id_place): static
     {
         $this->id_place = $id_place;
 
         return $this;
     }
+
 }

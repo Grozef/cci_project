@@ -25,11 +25,12 @@ class Book
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column]
-    private ?int $id_category = null;
+    #[ORM\ManyToOne(inversedBy: 'id_book')]
+    private ?AssoAward $id_award = null;
 
-    #[ORM\Column]
-    private ?int $id_awarded = null;
+    #[ORM\ManyToOne(inversedBy: 'id_book')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?AssoCat $id_cat = null;
 
     public function getId(): ?int
     {
@@ -84,26 +85,26 @@ class Book
         return $this;
     }
 
-    public function getId_category()
+    public function getIdAward(): ?AssoAward
     {
-        return $this->id_category;
+        return $this->id_award;
     }
 
-    public function setId_category($id_category)
+    public function setIdAward(?AssoAward $id_award): static
     {
-        $this->id_category = $id_category;
+        $this->id_award = $id_award;
 
         return $this;
     }
 
-    public function getId_awarded()
+    public function getIdCat(): ?AssoCat
     {
-        return $this->id_awarded;
+        return $this->id_cat;
     }
 
-    public function setId_awarded($id_awarded)
+    public function setIdCat(?AssoCat $id_cat): static
     {
-        $this->id_awarded = $id_awarded;
+        $this->id_cat = $id_cat;
 
         return $this;
     }

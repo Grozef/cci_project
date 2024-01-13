@@ -15,14 +15,15 @@ class Group
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_book = null;
-
     #[ORM\Column(length: 255)]
     private ?string $name_group = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $CreationDate = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Book $id_book = null;
 
     public function getId(): ?int
     {
@@ -52,15 +53,16 @@ class Group
         return $this;
     }
 
-    public function getId_book()
+    public function getIdBook(): ?Book
     {
         return $this->id_book;
     }
 
-    public function setId_book($id_book)
+    public function setIdBook(Book $id_book): static
     {
         $this->id_book = $id_book;
 
         return $this;
     }
+
 }

@@ -13,38 +13,42 @@ class InGroup
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_group = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Group $id_group = null;
 
-    #[ORM\Column]
-    private ?int $id_user = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $id_user = null;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdGroup(): ?int
+    public function getIdGroup(): ?Group
     {
         return $this->id_group;
     }
 
-    public function setIdGroup(int $id_group): static
+    public function setIdGroup(Group $id_group): static
     {
         $this->id_group = $id_group;
 
         return $this;
     }
 
-    public function getIdUser(): ?int
+    public function getIdUser(): ?User
     {
         return $this->id_user;
     }
 
-    public function setIdUser(int $id_user): static
+    public function setIdUser(?User $id_user): static
     {
         $this->id_user = $id_user;
 
         return $this;
     }
+
 }
