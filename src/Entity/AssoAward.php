@@ -17,61 +17,40 @@ class AssoAward
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Awarded $id_awarded = null;
+    private ?Awarded $id_award = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_award', targetEntity: book::class)]
-    private Collection $id_book;
-
-    public function __construct()
-    {
-        $this->id_book = new ArrayCollection();
-    }
+    #[ORM\OneToOne(inversedBy: 'id_award', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Book $id_book = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdAwarded(): ?Awarded
+    public function getIdAward(): ?Awarded
     {
-        return $this->id_awarded;
+        return $this->id_award;
     }
 
-    public function setIdAwarded(Awarded $id_awarded): static
+    public function setIdAward(Awarded $id_award): static
     {
-        $this->id_awarded = $id_awarded;
+        $this->id_award = $id_award;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, book>
-     */
-    public function getIdBook(): Collection
+    public function getIdBook(): ?Book
     {
         return $this->id_book;
     }
 
-    public function addIdBook(book $idBook): static
+    public function setIdBook(Book $id_book): static
     {
-        if (!$this->id_book->contains($idBook)) {
-            $this->id_book->add($idBook);
-            $idBook->setIdAward($this);
-        }
+        $this->id_book = $id_book;
 
         return $this;
     }
 
-    public function removeIdBook(book $idBook): static
-    {
-        if ($this->id_book->removeElement($idBook)) {
-            // set the owning side to null (unless already changed)
-            if ($idBook->getIdAward() === $this) {
-                $idBook->setIdAward(null);
-            }
-        }
-
-        return $this;
-    }
 
 }

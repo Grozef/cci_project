@@ -16,9 +16,6 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name_cat = null;
 
-    #[ORM\Column]
-    private ?int $id_book = null;    
-
     public function getId(): ?int
     {
         return $this->id;
@@ -36,15 +33,4 @@ class Category
         return $this;
     }
 
-    public function getIdBook()
-    {
-        return $this->id_book;
-    }
-
-    public function setIdBook($id_book)
-    {
-        $this->idBook = $id_book;
-
-        return $this;
-    }
 }

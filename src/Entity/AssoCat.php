@@ -15,17 +15,14 @@ class AssoCat
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\OneToOne(inversedBy: 'id_category', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Book $id_book = null;
+
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Category $id_cat = null;
+    private ?Category $id_category = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_cat', targetEntity: Book::class)]
-    private Collection $id_book;
-
-    public function __construct()
-    {
-        $this->id_book = new ArrayCollection();
-    }
 
 
     public function getId(): ?int
@@ -33,44 +30,26 @@ class AssoCat
         return $this->id;
     }
 
-    public function getIdCat(): ?Category
-    {
-        return $this->id_cat;
-    }
-
-    public function setIdCat(Category $id_cat): static
-    {
-        $this->id_cat = $id_cat;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Book>
-     */
-    public function getIdBook(): Collection
+    public function getIdBook(): ?Book
     {
         return $this->id_book;
     }
 
-    public function addIdBook(Book $idBook): static
+    public function setIdBook(Book $id_book): static
     {
-        if (!$this->id_book->contains($idBook)) {
-            $this->id_book->add($idBook);
-            $idBook->setIdCat($this);
-        }
+        $this->id_book = $id_book;
 
         return $this;
     }
 
-    public function removeIdBook(Book $idBook): static
+    public function getIdCategory(): ?Category
     {
-        if ($this->id_book->removeElement($idBook)) {
-            // set the owning side to null (unless already changed)
-            if ($idBook->getIdCat() === $this) {
-                $idBook->setIdCat(null);
-            }
-        }
+        return $this->id_category;
+    }
+
+    public function setIdCategory(Category $id_category): static
+    {
+        $this->id_category = $id_category;
 
         return $this;
     }

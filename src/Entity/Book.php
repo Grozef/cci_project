@@ -25,12 +25,11 @@ class Book
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id_book')]
-    private ?AssoAward $id_award = null;
+    #[ORM\OneToOne(mappedBy: 'id_book', cascade: ['persist', 'remove'])]
+    private ?AssoCat $id_category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'id_book')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?AssoCat $id_cat = null;
+    #[ORM\OneToOne(mappedBy: 'id_book', cascade: ['persist', 'remove'])]
+    private ?AssoAward $id_award = null;
 
     public function getId(): ?int
     {
@@ -85,27 +84,38 @@ class Book
         return $this;
     }
 
+    public function getIdCategory(): ?AssoCat
+    {
+        return $this->id_category;
+    }
+
+    public function setIdCategory(AssoCat $id_category): static
+    {
+        // set the owning side of the relation if necessary
+        if ($id_category->getIdBook() !== $this) {
+            $id_category->setIdBook($this);
+        }
+
+        $this->id_category = $id_category;
+
+        return $this;
+    }
+
     public function getIdAward(): ?AssoAward
     {
         return $this->id_award;
     }
 
-    public function setIdAward(?AssoAward $id_award): static
+    public function setIdAward(AssoAward $id_award): static
     {
+        // set the owning side of the relation if necessary
+        if ($id_award->getIdBook() !== $this) {
+            $id_award->setIdBook($this);
+        }
+
         $this->id_award = $id_award;
 
         return $this;
     }
 
-    public function getIdCat(): ?AssoCat
-    {
-        return $this->id_cat;
-    }
-
-    public function setIdCat(?AssoCat $id_cat): static
-    {
-        $this->id_cat = $id_cat;
-
-        return $this;
-    }
 }

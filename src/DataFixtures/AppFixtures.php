@@ -26,19 +26,20 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
- /*       //awarded
-        $award = new Awarded();
-        $award->setName($this->faker->name());
+        //awarded
 
+        $award = new Awarded();
+        $award->setName('prix du jury');
+        $manager->persist($award);
         //category
         $category = new Category(); 
-        $category->setName('prix du jury');
-                 
+        $category->setName($this->faker->name());
+        $manager->persist($category);                 
         
         //the_place
         $place = new ThePlace();
         $place->setNamePlace($this->faker->name());
-*/
+        $manager->persist($place);
         //Users
         for ($i = 0; $i < 24; $i++) { 
             $user = new User();
@@ -70,9 +71,7 @@ class AppFixtures extends Fixture
         $book ->setTitle ($this->faker->word())
                 ->setAuthor ($this->faker->word())
                 ->setDescription ($this->faker->word())
-                ->setPrice(mt_rand(0, 30))
-                ->setId_awarded(mt_rand(1, 3))
-                ->setId_category(1);
+                ->setPrice(mt_rand(0, 30));
 
                 $books[] = $book;
                 $manager->persist($book);
@@ -88,12 +87,12 @@ class AppFixtures extends Fixture
                 ->setCountry('France')
                 // rajouter le 0 devant le tel
                 ->setTel(0 .(mt_rand(600000000, 799999999)))
-                ->setIdUser(mt_rand(1, 50));
+                ->setIdUser($user);
                 
             $infos[] = $info;
             $manager->persist($info);
         }
-*/
+
         //Awarded
         for ($k = 0; $k < 3; $k++) {
             $award =new Awarded();
@@ -101,7 +100,7 @@ class AppFixtures extends Fixture
             $awards[] = $award;
             $manager->persist($award);
         }
-
+*/
         // rajouter les fixtures pour awarded et category
 
             $manager->flush();
