@@ -20,7 +20,7 @@ class AssoAward
     private ?Awarded $id_award = null;
 
     #[ORM\OneToOne(inversedBy: 'id_award', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Book $id_book = null;
 
     public function getId(): ?int

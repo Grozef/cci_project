@@ -13,6 +13,9 @@ class UserInfo
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column]
+    private ?int $id_user_id = null;
+
     #[ORM\Column(length: 255)]
     private ?string $direction = null;
 
@@ -32,7 +35,7 @@ class UserInfo
     #[ORM\JoinColumn(nullable: false)]
     private ?User $id_user = null;
 
-    public function getId(): ?int
+    public function getId(): ?User
     {
         return $this->id;
     }
@@ -105,9 +108,27 @@ class UserInfo
     public function setIdUser(User $id_user): static
     {
         $this->id_user = $id_user;
-
         return $this;
     }
 
 
+    /**
+     * Get the value of is_user_id
+     */ 
+    public function getIs_user_id()
+    {
+        return $this->id_user_id;
+    }
+
+    /**
+     * Set the value of is_user_id
+     *
+     * @return  self
+     */ 
+    public function setIs_user_id($id_user_id)
+    {
+        $this->id_user_id = $id_user_id;
+
+        return $this;
+    }
 }

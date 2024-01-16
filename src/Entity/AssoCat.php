@@ -16,7 +16,7 @@ class AssoCat
     private ?int $id = null;
 
     #[ORM\OneToOne(inversedBy: 'id_category', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Book $id_book = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

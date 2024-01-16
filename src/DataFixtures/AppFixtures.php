@@ -12,6 +12,7 @@ use App\Entity\Awarded;
 use App\Entity\UserInfo;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
@@ -31,16 +32,28 @@ class AppFixtures extends Fixture
         $award = new Awarded();
         $award->setName('prix du jury');
         $manager->persist($award);
+        $manager->flush($award);
+        
+                
+                $award =new Awarded();
+                $award->setName('Prix France Inter');
+                $manager->persist($award);
+                $manager->flush($award); 
+
         //category
         $category = new Category(); 
         $category->setName($this->faker->name());
-        $manager->persist($category);                 
+        $manager->persist($category); 
+        $manager->flush($category);                 
         
         //the_place
         $place = new ThePlace();
-        $place->setNamePlace($this->faker->name());
+        $place->setNamePlace('Bibliothèque de Villeurbanne');
         $manager->persist($place);
+        $manager->flush($place); 
+
         //Users
+        $users = [];
         for ($i = 0; $i < 24; $i++) { 
             $user = new User();
             $user->setName($this->faker->name())
@@ -48,11 +61,14 @@ class AppFixtures extends Fixture
                 ->setEmail($this->faker->email())
                 ->setRoles(['ROLE_USER'])
                 ->setPlainPassword('password');
-       //         $hashPassword = $this->hasher->hashPassword($user, 'password');
-       //         $user->setPassword($hashPassword);
-        
+       // géré par un event listener         
+       // $hashPassword = $this->hasher->hashPassword($user, 'password');
+       // $user->setPassword($hashPassword);
+            $users[] = $user;
             $manager->persist($user);
+            $manager->flush($users); 
                 }
+        $manager->flush($users);        
 
         //Admin
         $admin = new User();
@@ -62,8 +78,15 @@ class AppFixtures extends Fixture
         ->setRoles(['ROLE_ADMIN'])
         ->setPlainPassword('password');
         $manager->persist($admin);
+        $manager->flush($admin); 
 
-/*
+        //Category
+        $category = new Category();
+            $category->setName('Science Fiction');
+            $manager->persist($category);
+            $manager->flush($category);
+            
+
         //Books
         $books = [];
         for ($i = 0; $i < 50; $i++) {
@@ -75,34 +98,27 @@ class AppFixtures extends Fixture
 
                 $books[] = $book;
                 $manager->persist($book);
+                $manager->flush($book);
             };
 
         //UserInfo
         $infos = [];
-        for ($j = 0; $j < 24; $j++) {
+
+        for ($j = 0; $j = count($users); $j++) {
             $info =new UserInfo();
             $info->setDirection($this->faker->word())
                 ->setPostalCode(mt_rand(00001, 97999))
                 ->setTown($this->faker->word())
                 ->setCountry('France')
                 // rajouter le 0 devant le tel
-                ->setTel(0 .(mt_rand(600000000, 799999999)))
-                ->setIdUser($user);
+                ->setTel(0 .(mt_rand(600000000, 799999999)));
+
+            // rajouter le userId
                 
             $infos[] = $info;
             $manager->persist($info);
+            $manager->flush($info);
         }
-
-        //Awarded
-        for ($k = 0; $k < 3; $k++) {
-            $award =new Awarded();
-            $award->setName($this->faker->word());
-            $awards[] = $award;
-            $manager->persist($award);
-        }
-*/
-        // rajouter les fixtures pour awarded et category
-
-            $manager->flush();
-    }
+        
+    } 
 }

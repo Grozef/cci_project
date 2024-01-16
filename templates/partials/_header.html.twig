@@ -14,8 +14,8 @@
                                 <!--<span class="visually-hidden">(current)</span> -->
                         </a>
                     </li>
-                    {% if app.user %}
-
+                    
+                    <!-- tous les visiteurs -->
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_book_index') }}">Les livres
                         </a>
@@ -25,7 +25,29 @@
                         </a>
                     </li>
 
+                    <!-- Tous les utilisateurs -->
+                    {% if app.user %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_book_index') }}">Brancher fiche user connecté
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_group_index') }}">inscription reunion a brancher
+                        </a>
+                    </li>
+                        <!-- Tous les admins -->
+                        {% if app.user and is_granted('ROLE_ADMIN') %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_user_index') }}">Les utilisateurs
+                            </a>
+                            </li>
+
+                        {% endif %}
                     {% endif %}
+
+
 
                 </ul>
                 <div class="d-flex">
