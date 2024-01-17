@@ -100,7 +100,7 @@ class AppFixtures extends Fixture
                 $manager->persist($book);
                 $manager->flush($book);
             };
-
+/*
         //UserInfo
         $infos = [];
 
@@ -119,6 +119,6 @@ class AppFixtures extends Fixture
             $manager->persist($info);
             $manager->flush($info);
         }
-        
+*/        
     } 
 }
