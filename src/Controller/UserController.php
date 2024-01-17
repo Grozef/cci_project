@@ -6,11 +6,12 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 #[Route('/user')]
@@ -18,10 +19,17 @@ class UserController extends AbstractController
 {
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
-    {
+    public function index(UserRepository $userRepository,
+                            PaginatorInterface $paginator, 
+                            Request $request
+                        ): Response {
+            $users = $paginator->paginate(
+            $userRepository->findAll(['user'=> $this ->getUser()]),
+            $request->query->getInt('page', 1), 
+            10 
+        );
         return $this->render('pages/user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
         ]);
     }
 
@@ -46,21 +54,7 @@ class UserController extends AbstractController
         ]);
     }
 
-
-    /*  #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-      public function show(User $user): Response
-      {
-          $user = $this->getUser();
-              if (!$user){
-                  return $this->render('pages/user/show.html.twig', [
-                      'user' => $user,
-                  ]);
-              }
-      } */
-
-
-    // adapter les vues pour que l'utilisateur connécté ne voie que sa fiche et pas la liste
-
+    // a parfaire -> differencier admin et current user
     #[Route('/user/{id}', name: 'app_user_show', methods: ['GET'])]
     #[IsGranted("ROLE_USER")]
     public function show(User $user): Response

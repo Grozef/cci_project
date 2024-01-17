@@ -25,7 +25,6 @@ class SecurityController extends AbstractController
 
             'last_username' => $lastUsername,
             'error' => $error,
-           // dd($error, $lastUsername)
         ]);
     }
 
@@ -55,7 +54,7 @@ class SecurityController extends AbstractController
                 'success',
                 'Votre compte a bien été créé !'
             );
-
+            
             $manager->persist($user);
             $manager->flush();
 
