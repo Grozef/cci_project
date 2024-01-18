@@ -3,6 +3,17 @@
 {% block title %}Mon profil{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <h1 class = "ml-4 mt-4">{{ user.name}}</h1>
 
     <table class="table ml-5 mt-4" >
@@ -17,7 +28,7 @@
                 <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
-            {% if app.user and is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_ADMIN') %}
             <tr>
                 <th>Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>

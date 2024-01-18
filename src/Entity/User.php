@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[UniqueEntity('email')]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\EntityListeners(['App\EntityListener\UserListener'])]
 #[ORM\Table(name: '`user`')]
@@ -43,6 +44,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $pseudonym = null;
+
+    public function __construct(){
+         $this->roles = ['ROLE_USER', 'ROLE_ADMIN' ];
+        // $this->roles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {

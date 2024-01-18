@@ -28,18 +28,20 @@
         {% endblock %}
     </head>
     <body>
-        
+        <header>
         {% block header %}  
             {% include "partials/_header.html.twig" %} 
         {% endblock %}
-
-        {% block body %}
+        </header>
+        <main>
+            {% block body %}
         
-        {% endblock %}
-
+            {% endblock %}
+        </main>
+        <footer>
         {% block footer %}  
             {% include "partials/_footer.html.twig" %} 
         {% endblock %}
-    
+        </footer>
     </body>
 </html>
