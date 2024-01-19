@@ -27,11 +27,7 @@ class UserController extends AbstractController
         Request $request
     ): Response {
         $users = $paginator->paginate(
-<<<<<<< HEAD
             $userRepository->findAll(),
-=======
-            $userRepository->findAll(['user' => $this->getUser()]),
->>>>>>> 4d3ccef172942ce98ee1f0c207815cae2071794b
             $request->query->getInt('page', 1),
             10
         );
