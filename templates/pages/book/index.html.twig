@@ -3,7 +3,26 @@
 {% block title %}Book index{% endblock %}
 
 {% block body %}
-    <h1>Book index</h1>
+
+    <h1>Liste des livres</h1>
+
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+{# voici comment faire des commentaires en Twig 🍕🍕
+    {% if not books is same as ([]) %}
+    <div class="count ml-4 mt-4">
+        <h5> Il y a {{ books.getTotalItemCount }} livres enregistrés </h5> 
+    </div>
+    {% endif %} #}
 
     <table class="table">
         <thead>
@@ -37,5 +56,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_book_new') }}">Create new</a>
+    <a href="{{ path('app_book_new') }}"
+    class="btn btn-primary mt-4 mr-4 ml-4 mb-4" >Create new</a>
 {% endblock %}

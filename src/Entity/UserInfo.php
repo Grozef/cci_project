@@ -13,9 +13,6 @@ class UserInfo
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_user_id = null;
-
     #[ORM\Column(length: 255)]
     private ?string $direction = null;
 
@@ -33,9 +30,9 @@ class UserInfo
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $id_user = null;
+    private ?User $relation = null;
 
-    public function getId(): ?User
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -100,35 +97,16 @@ class UserInfo
         return $this;
     }
 
-    public function getIdUser(): ?User
+    public function getRelation(): ?User
     {
-        return $this->id_user;
+        return $this->relation;
     }
 
-    public function setIdUser(User $id_user): static
+    public function setRelation(User $relation): static
     {
-        $this->id_user = $id_user;
+        $this->relation = $relation;
+
         return $this;
     }
 
-
-    /**
-     * Get the value of is_user_id
-     */ 
-    public function getIs_user_id()
-    {
-        return $this->id_user_id;
-    }
-
-    /**
-     * Set the value of is_user_id
-     *
-     * @return  self
-     */ 
-    public function setIs_user_id($id_user_id)
-    {
-        $this->id_user_id = $id_user_id;
-
-        return $this;
-    }
 }

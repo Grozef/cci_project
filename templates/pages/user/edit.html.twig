@@ -3,17 +3,21 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <div class="ml-4 mt-4">
-        <h1 class="">Modification des informations de l'utilisateur</h1>
+    <div class="container">
+        <h1 class="">Modification des informations de l'utilisateur ({{user.name}}) </h1>
         {% for message in app.flashes('warning') %}
             <div class="alert alert-warning mt-4">
                 {{ message }}
             </div>
         {% endfor %}
+        {% for messages in app.flashes ('success') %}
+        <div class="alert alert-dismissible alert-success ml-4 mt-4">
+            {{ message}}
+        </div>
+        {% endfor %} 
             <div>
                 {{ include('pages/user/_form.html.twig', {'button_label': 'Update'}) }} 
-
-
+                
         {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('app_user_index') }}"
                 class="btn btn-warning mt-4"> back to list</a>
