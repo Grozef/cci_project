@@ -45,6 +45,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct(){
          $this->roles = ['ROLE_USER', 'ROLE_ADMIN' ];
+<<<<<<< HEAD
+=======
+        // $this->roles = new ArrayCollection();
+>>>>>>> 4d3ccef172942ce98ee1f0c207815cae2071794b
     }
 
     public function getId(): ?int
