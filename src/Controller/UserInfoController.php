@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\UserInfo;
+use App\Entity\User;
 use App\Form\UserInfoType;
 use App\Repository\UserInfoRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,10 +48,10 @@ class UserInfoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_user_info_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_user_info_show', methods: ['GET', 'POST'])]
     public function show(UserInfo $userInfo): Response
     {
-        return $this->render('user_info/show.html.twig', [
+        return $this->render('pages/user_info/show.html.twig', [
             'user_info' => $userInfo,
         ]);
     }
@@ -58,16 +59,29 @@ class UserInfoController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_info_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, UserInfo $userInfo, EntityManagerInterface $entityManager): Response
     {
+
+        $user = $this->getUser();
+        //recuperer le user pour affficher les infos
         $form = $this->createForm(UserInfoType::class, $userInfo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash(
-                'success',
-                'Vos informations ont bien été modifiées !'
-            );
+       /*     if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->render('pages/user/show.html.twig', [
+                    'user' => $user,
+                ]);
+            } elseif ($user == $this->getUser()) {
+                return $this->render('pages/user/show.html.twig', [
+                    'user' => $user,
+                ]);
+            } elseif ($user !== $this->getUser()) {
+                $this->addFlash('warning', ' Vous essayez d\'accéder à un profil qui n\'est pas le votre !');
+            }
+            return $this->render('pages/user/show.html.twig', [
+                'user' => $currentUser,
+            ]); */
 
             return $this->redirectToRoute('app_user_info_index', [], Response::HTTP_SEE_OTHER);
         }
