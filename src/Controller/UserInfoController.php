@@ -45,9 +45,12 @@ class UserInfoController extends AbstractController
                 'users' => $users,
             ]);
         }elseif($this->isGranted('ROLE_USER')){
+            //Variable "user_info" a recupérer, render home ?
             $user = $this->getUser();
                 $this->addFlash('warning', ' Vous n\'avez pas accès à la liste des utilisateurs inscrits, contactez un Admin !');
-                return $this->render('pages/user_info/show.html.twig', [
+                return $this->render('pages/home.html.twig', [
+                    'user_infos' => $user_infos,
+                    'users' => $users,
                     'user' => $user,
                 ]);        
         }
@@ -89,17 +92,6 @@ class UserInfoController extends AbstractController
         $user = $this->getUser();
         $targetUser = $userInfo ->getId();
 
-        // dd($targetUser, $user->getId());
-        // $infoUser = $this->getInfoUser();
-
-        /*
-                $user = $this->getUser();
-        return $this->render('pages/user_info/show.html.twig', [
-            'user_info' => $userInfo,
-            'user'=> $user,
-        ]);
-        */
-
         if ($this->isGranted('ROLE_ADMIN')) {
             return $this->render('pages/user_info/show.html.twig', [
                 'user_info' => $userInfo,
@@ -121,6 +113,7 @@ class UserInfoController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_USER")]
     #[Route('/{id}/edit', name: 'app_user_info_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, UserInfo $userInfo, EntityManagerInterface $entityManager): Response
     {
@@ -136,19 +129,19 @@ class UserInfoController extends AbstractController
             $entityManager->flush();
 
             if ($this->isGranted('ROLE_ADMIN')) {
-                return $this->render('pages/user/show.html.twig', [
+                return $this->render('pages/user/info/show.html.twig', [
                     'user' => $user,
                     'user_info' => $userInfo,
                 ]);
             } elseif ($user == $this->getUser()) {
-                return $this->render('pages/user/show.html.twig', [
+                return $this->render('pages/user/info/show.html.twig', [
                     'user' => $user,
                     'user_info' => $userInfo,
                 ]);
             } elseif ($user !== $this->getUser()) {
                 $this->addFlash('warning', ' Vous essayez d\'accéder à un profil qui n\'est pas le votre !');
             }
-            return $this->render('pages/user/show.html.twig', [
+            return $this->render('pages/user/info/show.html.twig', [
                 'user' => $user,
                 'user_info' => $userInfo,
             ]); 
