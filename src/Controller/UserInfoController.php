@@ -2,15 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\UserInfo;
 use App\Entity\User;
+use App\Form\UserType;
+use App\Entity\UserInfo;
 use App\Form\UserInfoType;
 use App\Repository\UserInfoRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/user/info')]
 class UserInfoController extends AbstractController
@@ -49,10 +50,12 @@ class UserInfoController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_user_info_show', methods: ['GET', 'POST'])]
-    public function show(UserInfo $userInfo): Response
+    public function show(UserInfo $userInfo, User $user): Response
     {
+        $user = $this->getUser();
         return $this->render('pages/user_info/show.html.twig', [
             'user_info' => $userInfo,
+            'user'=> $user,
         ]);
     }
 
@@ -62,32 +65,38 @@ class UserInfoController extends AbstractController
 
         $user = $this->getUser();
         //recuperer le user pour affficher les infos
+
         $form = $this->createForm(UserInfoType::class, $userInfo);
+        $formUser = $this->createForm(UserType::class, $user );
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $formUser->isSubmitted() && $formUser->isValid()) {
             $entityManager->flush();
 
-       /*     if ($this->isGranted('ROLE_ADMIN')) {
+            if ($this->isGranted('ROLE_ADMIN')) {
                 return $this->render('pages/user/show.html.twig', [
                     'user' => $user,
+                    'user_info' => $userInfo,
                 ]);
             } elseif ($user == $this->getUser()) {
                 return $this->render('pages/user/show.html.twig', [
                     'user' => $user,
+                    'user_info' => $userInfo,
                 ]);
             } elseif ($user !== $this->getUser()) {
                 $this->addFlash('warning', ' Vous essayez d\'accéder à un profil qui n\'est pas le votre !');
             }
             return $this->render('pages/user/show.html.twig', [
-                'user' => $currentUser,
-            ]); */
+                'user' => $user,
+                'user_info' => $userInfo,
+            ]); 
 
             return $this->redirectToRoute('app_user_info_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('pages/user_info/edit.html.twig', [
             'user_info' => $userInfo,
+            'user' => $user,
             'form' => $form,
         ]);
     }

@@ -34,8 +34,8 @@ class UserInfoType extends AbstractType
             ->add('postalCode', IntegerType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'min' => 1,
-                    'max' => 50
+                    'min' => 1000,
+                    'max' => 99000
                 ],
                 'label' => 'Code Postal',
                 'label_attr' => [
@@ -43,7 +43,6 @@ class UserInfoType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\Positive(),
-                    new Assert\LessThan(51)
                 ]
             ])
             ->add('town', TextType::class, [
@@ -80,7 +79,7 @@ class UserInfoType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'min' => 1,
-                    'max' => 50
+                    'max' => 699999999
                 ],
                 'required' => false,
                 'label' => 'N° Téléphone',
@@ -89,15 +88,14 @@ class UserInfoType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\Positive(),
-                    new Assert\LessThan(51)
                 ]
             ])
-            ->add('submit', SubmitType::class, [
+          /*  ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-4'
                 ],
                 'label' => 'User Infos'
-            ])
+            ])*/
         ;
     }
 

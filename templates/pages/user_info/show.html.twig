@@ -1,16 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}UserInfo{% endblock %}
+{% block title %}Mon profil{% endblock %}
 
 {% block body %}
-    <h1>UserInfo</h1>
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-dismissible alert-success mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
 
-    <table class="table">
+    <h1 class = "ml-4 mt-4">{{ user.name}}</h1>
+
+    <table class="table ml-5 mt-4" >
         <tbody>
+            {% if is_granted('ROLE_ADMIN') %}
             <tr>
                 <th>Id</th>
                 <td>{{ user_info.id }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Direction</th>
                 <td>{{ user_info.direction }}</td>
@@ -31,12 +44,33 @@
                 <th>Tel</th>
                 <td>{{ user_info.tel }}</td>
             </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ user.name }}</td>
+            </tr>
+            <tr>
+                <th>Pseudonym</th>
+                <td>{{ user.pseudonym }}</td>
+            </tr>
+            <tr>
+                <th>email</th>
+                <td>{{ user.email }}</td>
+            </tr>
         </tbody>
     </table>
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="mt-2">
+        <a href="{{ path('app_user_info_index') }}"
+        class="btn btn-primary mt-4 mr-4 ml-4">back to list</a>
+    </div>
+    {% endif %}
 
-    <a href="{{ path('app_user_info_index') }}">back to list</a>
-
-    <a href="{{ path('app_user_info_edit', {'id': user_info.id}) }}">edit</a>
-
+    <a href="{{ path('app_user_info_edit', {'id': user.id}) }}"
+    class="btn btn-warning mt-4 ml-4">edit</a>
+    
+<div class="ml-4 mb-4">
+    {% if is_granted('ROLE_ADMIN') %}
     {{ include('pages/user_info/_delete_form.html.twig') }}
+    {% endif %}
+
 {% endblock %}
