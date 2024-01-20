@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-//this controller show all users / only for Admins
+//this controller show all users / only for Admins ?
 #[Route('/user')]
 class UserController extends AbstractController
 {
