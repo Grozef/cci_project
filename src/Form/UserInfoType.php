@@ -79,7 +79,7 @@ class UserInfoType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'min' => 1,
-                    'max' => 699999999
+                    'max' => 799999999
                 ],
                 'required' => false,
                 'label' => 'N° Téléphone',
@@ -90,12 +90,12 @@ class UserInfoType extends AbstractType
                     new Assert\Positive(),
                 ]
             ])
-          /*  ->add('submit', SubmitType::class, [
+            ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-4'
                 ],
-                'label' => 'User Infos'
-            ])*/
+                'label' => 'Modifier'
+            ])
         ;
     }
 

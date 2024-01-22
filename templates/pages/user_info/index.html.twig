@@ -22,10 +22,11 @@
     </div>
     {% endif %}
 
-    <table class="table">
+    <table class="table mt-4 ml-4">
         <thead>
-            <tr>
-                <th>Id</th>
+            <tr class="table-active">
+                <th scope="row">Id</th>
+                <th>Roles</th>
                 <th>Direction</th>
                 <th>PostalCode</th>
                 <th>Town</th>
@@ -39,28 +40,32 @@
         </thead>
         <tbody>
 
-        {% for user_info in user_infos  %}
-        {% for user in users %}
-            <tr>
-                <td>{{ user_info.id }}</td>
+{# verifier la doc de twig pour loop #}
+        {% for user_info in user_infos %}
+        {% set user = users[loop.index0] %}
+
+            <tr class="table-active">
+                <th scope="row">{{ user_info.id }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user_info.direction }}</td>
                 <td>{{ user_info.postalCode }}</td>
                 <td>{{ user_info.town }}</td>
                 <td>{{ user_info.country }}</td>
                 <td>{{ user_info.tel }}</td> 
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.pseudonym }}</td>
-                            <td>{{ user.email }}</td>                
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.pseudonym }}</td>
+                    <td>{{ user.email }}</td> 
+               
                 <td>
-                    <a href="{{ path('app_user_info_show', {'id': user_info.id}) }}">show</a>
-                    <a href="{{ path('app_user_info_edit', {'id': user_info.id}) }}">edit</a>
+                    <a href="{{ path('app_user_info_show', {'id': user_info.id}) }}" class="btn btn-primary mt-4 mr-4">show</a>
+                    <a href="{{ path('app_user_info_edit', {'id': user_info.id}) }}" class="btn btn-warning mt-4">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
                 <td colspan="7">no records found</td>
             </tr>
-        {% endfor %}
+ 
         {% endfor %}
         </tbody>
     </table>

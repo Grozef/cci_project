@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Entity\UserInfo;
 use App\Form\UserPasswordType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -174,12 +175,15 @@ class UserController extends AbstractController
     }
 
     // This controller allows an admin to delete an user's profile
+
+    // a ameliorer pour delete les deux entites en meme temps
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, User $user, UserInfo $userInfo, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
+            $entityManager->remove($userInfo);
             $entityManager->flush();
 
             $this->addFlash(
@@ -188,6 +192,7 @@ class UserController extends AbstractController
             );
         }
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        
     }
 
     //this controller allows an user to modify it's own password

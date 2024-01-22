@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\InfosType;
 use App\Entity\UserInfo;
 use App\Form\UserInfoType;
+use Symfony\Component\Form\Form;
 use App\Repository\UserRepository;
 use App\Repository\UserInfoRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 #[Route('/user/info')]
@@ -89,7 +93,6 @@ class UserInfoController extends AbstractController
     #[Route('/{id}', name: 'app_user_info_show', methods: ['GET', 'POST'])]
     public function show(UserInfo $userInfo, User $user): Response
     {   
-        $user = $this->getUser();
         $targetUser = $userInfo ->getId();
 
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -112,54 +115,169 @@ class UserInfoController extends AbstractController
 
         ]);
     }
-
+/*    A modifier pour pouvoir utiliser un formulaire et deux entités
     #[IsGranted("ROLE_USER")]
     #[Route('/{id}/edit', name: 'app_user_info_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, UserInfo $userInfo, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, UserInfo $userInfo, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
     {
 
         $user = $this->getUser();
-        //recuperer le user pour affficher les infos
-
-        $form = $this->createForm(UserInfoType::class, $userInfo);
-        $formUser = $this->createForm(UserType::class, $user );
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid() && $formUser->isSubmitted() && $formUser->isValid()) {
-            $entityManager->flush();
+        $form = $this->createForm(InfosType::class);
+        $form->handleRequest($request); 
 
             if ($this->isGranted('ROLE_ADMIN')) {
-                return $this->render('pages/user/info/show.html.twig', [
+                    $form = $this->createForm(InfosType::class);
+                    $form->handleRequest($request);  
+
+                        if ($form->isSubmitted() && $form->isValid() ) { 
+                            if ($hasher->isPasswordValid($user, $form->getData()->getPlainPassword())) {
+                            $user = $form->getData();
+                            $userInfo = $form->getData();     
+                            $entityManager->persist($user);
+                            $entityManager->persist($userInfo);
+                            $entityManager->flush();
+
+                            $this->addFlash(
+                                'success',
+                                'Les informations de votre compte ont été modifiées avec succés'
+                            );
+                     return $this->redirectToRoute('app_user_info_show', [
+                            'user' => $user,
+                            'userInfo' => $userInfo,
+                            'form' => $form,
+                            'id' => $user->getId(),
+                        ]);
+                    } else {
+                        $this->addFlash(
+                            'warning',
+                            'Le mot de passe renseigné est incorrect'
+                        );
+                        return $this->redirectToRoute('app_user_info_edit', [
+                            'user' => $user,
+                            'id' => $user->getId()
+                        ]);
+                    }
+                }                  
+            } elseif ($this->isGranted('ROLE_USER')) {
+                if ($user == $this->getUser()){
+                    // dd('je suis ici');
+                    $form = $this->createFormBuilder()
+                    ->add('name', InfosType::class)
+                    ->getForm();
+                    //cacher le champs role à un simple User
+                    $form->remove('roles');
+                    $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid() ) { 
+                    $this->addFlash(
+                        'success',
+                        'Les informations de votre compte ont été modifiées avec succés'
+                    );
+
+                return $this->render('pages/user_info/show.html.twig', [
                     'user' => $user,
                     'user_info' => $userInfo,
+                    'form' => $form,
                 ]);
-            } elseif ($user == $this->getUser()) {
-                return $this->render('pages/user/info/show.html.twig', [
+            }              
+        } else {
+                $this->addFlash(
+                    'warning',
+                    'Le mot de passe renseigné est incorrect'
+                );
+                return $this->redirectToRoute('app_user_info_edit', [
                     'user' => $user,
-                    'user_info' => $userInfo,
+                    'id' => $user->getId()
                 ]);
-            } elseif ($user !== $this->getUser()) {
-                $this->addFlash('warning', ' Vous essayez d\'accéder à un profil qui n\'est pas le votre !');
             }
-            return $this->render('pages/user/info/show.html.twig', [
+        } elseif ($this->getUser() !== $user) {
+            $this->addFlash(
+                'warning',
+                'Vous essayez d\'accéder à des informations qui ne vous appartiennent pas !'
+            );
+            return $this->redirectToRoute('app_user_show', [
                 'user' => $user,
-                'user_info' => $userInfo,
-            ]); 
-
-            return $this->redirectToRoute('app_user_info_index', [], Response::HTTP_SEE_OTHER);
+                'id' => $user->getId()
+            ]);
         }
+        return $this->render('pages/user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+}
+*/
 
-        return $this->render('pages/user_info/edit.html.twig', [
-            'user_info' => $userInfo,
+    // this controller allows an user to edit it's own profile's informations
+    // this controller allows an admin to modify anyone's profile informations
+    #[IsGranted("ROLE_USER")]
+    #[Route('/{id}/edit', name: 'app_user_info_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, User $user, UserInfo $userInfo, EntityManagerInterface $entityManager): Response
+    {
+        $currentUser = $this->getUser();
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $form = $this->createForm(UserInfoType::class, $userInfo);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+ 
+                    $userInfo = $form->getData();
+                    $entityManager->persist($userInfo);
+                    $entityManager->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Les informations de votre compte ont été modifiées avec succés'
+                    );
+                    return $this->redirectToRoute('app_user_info_show', [
+                        'user' => $user,
+                        'id' => $user->getId()
+                    ]);
+                } 
+        } elseif ($user == $this->getUser()) {
+            $form = $this->createForm(UserInfoType::class, $userInfo);
+            //cacher le champs role à un simple User
+            $form->remove('roles');
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                    $userInfo = $form->getData();
+                    $entityManager->persist($userInfo);
+                    $entityManager->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Les informations de votre compte ont été modifiées avec succés'
+                    );
+                    return $this->redirectToRoute('app_user_info_show', [
+                        'user' => $user,
+                        'id' => $user->getId()
+                    ]);
+                } 
+        } elseif ($this->getUser() !== $user) {
+            $this->addFlash(
+                'warning',
+                'Vous essayez d\'accéder à des informations qui ne vous appartiennent pas !'
+            );
+            return $this->redirectToRoute('app_user_info_show', [
+                'user' => $currentUser,
+                'id' => $currentUser->getId()
+            ]);
+        }
+        return $this->render('pages/user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
     }
 
+
+    //this controller allows an admin to delete an user's information
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/{id}', name: 'app_user_info_delete', methods: ['POST'])]
-    public function delete(Request $request, UserInfo $userInfo, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, User $user, UserInfo $userInfo, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$userInfo->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($user);
             $entityManager->remove($userInfo);
             $entityManager->flush();
 

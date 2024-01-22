@@ -1,13 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit UserInfo{% endblock %}
+{% block title %}Modifier les informations {% endblock %}
 
 {% block body %}
-    <h1>Edit UserInfo</h1>
+    <div class="container">
+        <h1 class="">Modification des informations de l'utilisateur ({{user.name}}) </h1>
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning mt-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for messages in app.flashes ('success') %}
+                <div class="alert alert-dismissible alert-success ml-4 mt-4">
+                     {{ message}}
+                </div>
+            {% endfor %} 
 
-    {{ include('pages/user_info/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('pages/user_info/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_user_info_index') }}">back to list</a>
 
-    {{ include('pages/user_info/_delete_form.html.twig') }}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_user_info_index') }}"
+            class="btn btn-primary mt-4 mr-4 mb-4" >back to list</a>
+
+            {{ include('pages/user_info/_delete_form.html.twig') }}
+
+        {% endif %}
+     </div>
 {% endblock %}
