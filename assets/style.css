@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,600,600italic");
+
+html #html{ height : 100%; }
+
+body #body{
+    position: relative;
+    height : 100%;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+#main{
+    height: 75%;
+}  
+#footer{
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+}  

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html id="html">
 <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -12,7 +12,7 @@
          {# Vous avez également inclus le lien vers le fichier "variables.scss" de Bootswatch  #}
          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/variables.scss">
          {# Vous avez inclus vos propres styles via un fichier local "style.css" #}
-         <link rel="stylesheet" href="/style.css">
+         <link rel="stylesheet" href="./../assets/style.css">
            
         {% endblock %}
 
@@ -28,17 +28,17 @@
         {% endblock %}
     </head>
     <body>
-        <header>
+        <header id="header">
         {% block header %}  
             {% include "partials/_header.html.twig" %} 
         {% endblock %}
         </header>
-        <main>
+        <main id="main">
             {% block body %}
         
             {% endblock %}
         </main>
-        <footer>
+        <footer id="footer">
         {% block footer %}  
             {% include "partials/_footer.html.twig" %} 
         {% endblock %}

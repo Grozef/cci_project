@@ -283,10 +283,10 @@ class UserInfoController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Vos informations ont bien été supprimées !'
+                'Le compte a bien été supprimé !'
             );
         }
 
-        return $this->redirectToRoute('app_user_info_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_info_index');
     }
 }
