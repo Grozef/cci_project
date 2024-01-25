@@ -32,6 +32,9 @@ final class Version20240119123528 extends AbstractMigration
         $this->addSql('CREATE TABLE `user` (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, pseudonym VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user_info (id INT AUTO_INCREMENT NOT NULL, relation_id INT NOT NULL, direction VARCHAR(255) NOT NULL, postal_code INT NOT NULL, town VARCHAR(255) NOT NULL, country VARCHAR(255) NOT NULL, tel INT NOT NULL, UNIQUE INDEX UNIQ_B1087D9E3256915B (relation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE messenger_messages (id BIGINT AUTO_INCREMENT NOT NULL, body LONGTEXT NOT NULL, headers LONGTEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', available_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', delivered_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_75EA56E0FB7336F0 (queue_name), INDEX IDX_75EA56E0E3BD61CE (available_at), INDEX IDX_75EA56E016BA31DB (delivered_at), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+
+        $this->addSql('CREATE TABLE ch_cookieconsent_log (id INT AUTO_INCREMENT PRIMARY KEY, ip_address VARCHAR(255), cookie_consent_key VARCHAR(255), cookie_name VARCHAR(255), cookie_value VARCHAR(255), timestamp DATETIME)');
+
         $this->addSql('ALTER TABLE asso_award ADD CONSTRAINT FK_FA01318F6D896E5A FOREIGN KEY (id_award_id) REFERENCES awarded (id)');
         $this->addSql('ALTER TABLE asso_award ADD CONSTRAINT FK_FA01318FC83F1AF1 FOREIGN KEY (id_book_id) REFERENCES book (id)');
         $this->addSql('ALTER TABLE asso_cat ADD CONSTRAINT FK_C046AF47C83F1AF1 FOREIGN KEY (id_book_id) REFERENCES book (id)');
@@ -69,5 +72,6 @@ final class Version20240119123528 extends AbstractMigration
         $this->addSql('DROP TABLE `user`');
         $this->addSql('DROP TABLE user_info');
         $this->addSql('DROP TABLE messenger_messages');
+        $this->addSql('DROP TABLE ch_cookieconsent_log');
     }
 }
