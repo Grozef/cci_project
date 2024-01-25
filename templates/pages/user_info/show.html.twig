@@ -16,7 +16,7 @@
 
     <h1 class = "ml-4 mt-4">{{ user.name}}</h1>
 
-    <table class="table ml-5 mt-4" >
+    <table class="table ml-5 mt-4 darkblue" >
         <tbody>
             {% if is_granted('ROLE_ADMIN') %}
             <tr>
@@ -66,7 +66,7 @@
     {% endif %}
 
     <a href="{{ path('app_user_info_edit', {'id': user.id}) }}"
-    class="btn btn-warning mt-4 ml-4">edit</a>
+    class="btn btn-warning mt-4 ml-4 mb-4">edit</a>
     
 
 {% endblock %}

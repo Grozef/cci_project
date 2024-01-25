@@ -23,13 +23,13 @@ class UserType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                     'minlength' => '2',
                     'maxlength' => '255'
                 ],
                 'label' => 'Nom',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new NotBlank(),
@@ -38,25 +38,28 @@ class UserType extends AbstractType
                 ])
             ->add('pseudonym', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                     'minlength' => '2',
                     'maxlength' => '255'
                 ],
                 'required' => false,
                 'label' => 'Pseudo',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Length(['min'=>2, 'max'=> 255])
                 ]
                 ])
                 ->add('roles', ChoiceType::class, [
+                    'attr' => [
+                        'class' => 'form-control darkblue',
+                    ],
                         'choices' => ['ROLE_ADMIN' => 'ROLE_ADMIN', 'ROLE_USER' => 'ROLE_USER'],
                         'expanded' => true,
                         'multiple' => true,
                         'label_attr' => [
-                            'class' => 'form-label mt-4'
+                            'class' => 'form-label mt-4 ml-4 darkblue'
                         ],
                     ]
                 )               
@@ -68,7 +71,7 @@ class UserType extends AbstractType
                 ],
                 'label' => 'Adresse email',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -84,7 +87,7 @@ class UserType extends AbstractType
                     ],
                     'label' => 'Mot de passe',
                     'label_attr' => [
-                        'class' => 'form-label mt-4'
+                        'class' => 'form-label mt-4 darkblue'
                     ]
                 ],
                 'second_options' => [
@@ -93,7 +96,7 @@ class UserType extends AbstractType
                     ],
                     'label' => 'Confirmation du mot de passe',
                     'label_attr' => [
-                        'class' => 'form-label mt-4'
+                        'class' => 'form-label mt-4 darkblue'
                     ]
                 ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas'

@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,600,600italic");
+
+html #html{ 
+    height : 100%;
+}
+
+body #body{
+    position: relative;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+#main{
+    height: 100%;
+    min-height: calc(100vh - 250px);
+    overflow: hidden;
+    background-color:#85EDEE; 
+    background: linear-gradient(50deg, #85EDEE, #1E616C);
+  
+} 
+
+#footer{
+  height: 100px;
+  position: relative;  
+  bottom: 0;
+  /* background-color: #1E616C;*/
+} 
+
+.blue{
+    background-color:#1E616C; 
+    background: linear-gradient(90deg, #003335, black);
+    color:white;
+}
+
+.darkblue{
+    color: black;
+}
+
+.erreur{
+    color: black;
+    text-align: center;
+    justify-content: center;
+
+}

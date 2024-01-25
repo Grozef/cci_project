@@ -1,27 +1,28 @@
+  <!-- Site footer -->
+    <footer class="site-footer mt-4">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <h6>About</h6>
+            <p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by <a href="{{ path('legals_erreur') }}">Lisowski François</a> </p>
+          </div>
 
-<section #footer class="container-fluid">
-  <!-- Footer -->
-  <footer id="footer" class="text-center text-white" style="">
-    <!-- Grid container -->
-    <div class="containerfooter">
-      <!-- Section: CTA -->
-      <section class="liensfooter">
-      			<a class="nav-link" href="{{ path('app_group_index') }}">Les groupes de lecture
-					  </a>
-          	<a class="nav-link" href="{{ path('app_group_index') }}">Les groupes de lecture
-					  </a>
+          <div class="col-xs-6 col-md-3">
+            <h6>Sites Connexes</h6>
+            <ul class="footer-links">
+              <li><a href="https://mediatheques.villeurbanne.fr/" target="blank">Médiathèques de Villeurbanne</a></li>
+              <li><a href="https://bm.mairie-vaulxenvelin.fr/" target="blank">Bibliothèques municipales de Vaulx-en-Velin</a></li>
+            </ul>
+          </div>
 
-      </section>
-      <!-- Section: CTA -->
-    </div>
-    <!-- Grid container -->
-
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(3, 2, 0, 0.2);">
-      © 2024 Copyright:
-      <a class="text-white" href="">Super Bouquin</a>
-    </div>
-    <!-- Copyright -->
-  </footer>
-  <!-- Footer -->
-</section>
+          <div class="col-xs-6 col-md-3">
+            <h6>Liens Annexes</h6>
+            <ul class="footer-links">
+              <li><a href="{{ path('legals_confidentialite') }}">Politique de confidentialité</a></li>
+              <li><a href="{{ path('legals_mentions') }}">Mentions légales</a></li>
+            </ul>
+          </div>
+        </div>
+        <hr>
+      </div>
+</footer>
