@@ -20,7 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-
+//this controller shows to an admin the list of the user's informations
 #[Route('/user/info')]
 class UserInfoController extends AbstractController
 {
@@ -63,6 +63,7 @@ class UserInfoController extends AbstractController
         ]);
     }
 
+    // this controller allows an admin to create a new user and it's userInfos
     #[IsGranted("ROLE_ADMIN")]
     #[Route('/new', name: 'app_user_info_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -89,6 +90,7 @@ class UserInfoController extends AbstractController
         ]);
     }
 
+    // this controller shows the complementary informations about an user
     #[IsGranted("ROLE_USER")]
     #[Route('/{id}', name: 'app_user_info_show', methods: ['GET', 'POST'])]
     public function show(UserInfo $userInfo, User $user): Response
@@ -115,97 +117,6 @@ class UserInfoController extends AbstractController
 
         ]);
     }
-/*    A modifier pour pouvoir utiliser un formulaire et deux entités
-    #[IsGranted("ROLE_USER")]
-    #[Route('/{id}/edit', name: 'app_user_info_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, UserInfo $userInfo, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
-    {
-
-        $user = $this->getUser();
-        $form = $this->createForm(InfosType::class);
-        $form->handleRequest($request); 
-
-            if ($this->isGranted('ROLE_ADMIN')) {
-                    $form = $this->createForm(InfosType::class);
-                    $form->handleRequest($request);  
-
-                        if ($form->isSubmitted() && $form->isValid() ) { 
-                            if ($hasher->isPasswordValid($user, $form->getData()->getPlainPassword())) {
-                            $user = $form->getData();
-                            $userInfo = $form->getData();     
-                            $entityManager->persist($user);
-                            $entityManager->persist($userInfo);
-                            $entityManager->flush();
-
-                            $this->addFlash(
-                                'success',
-                                'Les informations de votre compte ont été modifiées avec succés'
-                            );
-                     return $this->redirectToRoute('app_user_info_show', [
-                            'user' => $user,
-                            'userInfo' => $userInfo,
-                            'form' => $form,
-                            'id' => $user->getId(),
-                        ]);
-                    } else {
-                        $this->addFlash(
-                            'warning',
-                            'Le mot de passe renseigné est incorrect'
-                        );
-                        return $this->redirectToRoute('app_user_info_edit', [
-                            'user' => $user,
-                            'id' => $user->getId()
-                        ]);
-                    }
-                }                  
-            } elseif ($this->isGranted('ROLE_USER')) {
-                if ($user == $this->getUser()){
-                    // dd('je suis ici');
-                    $form = $this->createFormBuilder()
-                    ->add('name', InfosType::class)
-                    ->getForm();
-                    //cacher le champs role à un simple User
-                    $form->remove('roles');
-                    $form->handleRequest($request);
-
-                if ($form->isSubmitted() && $form->isValid() ) { 
-                    $this->addFlash(
-                        'success',
-                        'Les informations de votre compte ont été modifiées avec succés'
-                    );
-
-                return $this->render('pages/user_info/show.html.twig', [
-                    'user' => $user,
-                    'user_info' => $userInfo,
-                    'form' => $form,
-                ]);
-            }              
-        } else {
-                $this->addFlash(
-                    'warning',
-                    'Le mot de passe renseigné est incorrect'
-                );
-                return $this->redirectToRoute('app_user_info_edit', [
-                    'user' => $user,
-                    'id' => $user->getId()
-                ]);
-            }
-        } elseif ($this->getUser() !== $user) {
-            $this->addFlash(
-                'warning',
-                'Vous essayez d\'accéder à des informations qui ne vous appartiennent pas !'
-            );
-            return $this->redirectToRoute('app_user_show', [
-                'user' => $user,
-                'id' => $user->getId()
-            ]);
-        }
-        return $this->render('pages/user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-}
-*/
 
     // this controller allows an user to edit it's own profile's informations
     // this controller allows an admin to modify anyone's profile informations

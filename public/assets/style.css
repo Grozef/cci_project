@@ -32,9 +32,10 @@ body #body{
 }
 
 .darkblue{
-    color: black;
+    color: rgb(1, 1, 59);
 }
 
+/*  */
 .erreur{
     color: black;
     text-align: center;
@@ -45,4 +46,19 @@ body #body{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/*  pagination des listes user et user_info */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+#boutonNavBar{
+    color: rgb(1, 1, 59);
+    background-color: #1E616C;
 }

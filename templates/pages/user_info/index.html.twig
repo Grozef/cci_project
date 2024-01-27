@@ -69,12 +69,13 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <div class="navigation d-flex justify-content-center mt-4">
-        <ul class="navigation d-flex justify-content-center mt-4">{{ knp_pagination_render(user_infos) }}</ul>    
-    </div>
+        <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex justify-content-center mt-4">
+        {{ knp_pagination_render(users) }}
+        </ul>    
+    </nav>
 
     <a href="{{ path('app_user_new') }}"
-    class="btn btn-primary mt-4 mr-4 ml-4 mb-4">Create new</a>
+    class="btn btn-primary mr-4 ml-4 mb-4">Create new</a>
 
 {% endblock %}
