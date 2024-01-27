@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserInfo;
+use App\Form\AdditionnalType;
 use App\Form\RegistrationType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,18 +50,31 @@ class SecurityController extends AbstractController
         $user->setRoles(['ROLE_USER']);
 
         $form = $this->createForm(RegistrationType::class, $user);
+        $form->add('userInfo', AdditionnalType::class);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
 
+            // Retrieve the userInfo object from the form
+            $userInfo = $form['userInfo']->getData();
+            $user->setUserInfo($userInfo);
+
+            // Hash the user's password
+            $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
+            $user->setPassword($hashedPassword);
+
+            $manager->persist($user);  
+            
+            $userInfo ->setRelation($user);
+            $manager->persist($userInfo);
+            // dd($userInfo);  
+            $manager->flush();
+
             $this->addFlash(
                 'success',
                 'Votre compte a bien été créé !'
             );
-
-            $manager->persist($user);
-            $manager->flush();
 
             return $this->redirectToRoute('security.login');
         }

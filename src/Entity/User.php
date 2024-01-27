@@ -147,4 +147,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    
+    private ?UserInfo $userInfo = null;
+
+    public function getUserInfo(): ?UserInfo
+    {
+        return $this->userInfo;
+    }
+
+    public function setUserInfo(UserInfo $userInfo): void
+    {
+        $this->userInfo = $userInfo;
+    }
+
 }

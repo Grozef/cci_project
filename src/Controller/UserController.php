@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Entity\UserInfo;
+use App\Form\AdditionnalType;
 use App\Form\UserPasswordType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,16 +50,30 @@ class UserController extends AbstractController
     // This controller allow an admin to create a new user
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
+
+        $form->add('userInfo', AdditionnalType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Retrieve User
+            $user = $form->getData();
+            // Retrieve the userInfo object from the form
+            $userInfo = $form['userInfo']->getData();
+            $user->setUserInfo($userInfo);
+            // Hash the user's password
+            // dd($user, $userInfo);
+            $hashedPassword = $hasher->hashPassword($user, $user->getPlainPassword());
+            $user->setPassword($hashedPassword);
+
             $entityManager->persist($user);
+            $userInfo ->setRelation($user);
+            $entityManager->persist($userInfo);
             $entityManager->flush();
-            $this->addFlash('success', ' Le compte a bien été créé ! Il faut maintenant ajouter les information personnelles de l\'utilisateur.');
+            $this->addFlash('success', ' Le compte a bien été créé !');
             return $this->render('pages/user/show.html.twig',[
                 'user' => $user,
             ]);

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\UserInfo;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -10,10 +11,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class RegistrationType extends AbstractType
 {
@@ -65,9 +67,13 @@ class RegistrationType extends AbstractType
                     new Assert\Email(),
                     new Assert\Length(['min'=>2, 'max'=> 180])
                 ]
-
-
             ])
+            // inclure les infosUsers dans le controller ?
+            ->add('userInfo', CollectionType::class, [
+                'entry_type' => AdditionnalType::class,
+                'label' => 'Informations complémentaires',
+            ])
+
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
