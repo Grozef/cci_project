@@ -18,13 +18,13 @@ class UserInfoType extends AbstractType
         $builder
             ->add('direction', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                     'minlength' => '2',
                     'maxlength' => '255'
                 ],
                 'label' => 'Adresse',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 255]),
@@ -33,13 +33,13 @@ class UserInfoType extends AbstractType
             ])
             ->add('postalCode', IntegerType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                     'min' => 1000,
                     'max' => 99000
                 ],
                 'label' => 'Code Postal',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Assert\Positive(),
@@ -47,13 +47,13 @@ class UserInfoType extends AbstractType
             ])
             ->add('town', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                     'minlength' => '2',
                     'maxlength' => '255'
                 ],
                 'label' => 'Ville',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 255]),
@@ -62,13 +62,13 @@ class UserInfoType extends AbstractType
             ])
             ->add('country', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                     'minlength' => '2',
                     'maxlength' => '255'
                 ],
                 'label' => 'Pays',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 255]),
@@ -77,14 +77,14 @@ class UserInfoType extends AbstractType
             ])
             ->add('tel', IntegerType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                     'min' => 1,
                     'max' => 799999999
                 ],
                 'required' => false,
                 'label' => 'N° Téléphone',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Assert\Positive(),

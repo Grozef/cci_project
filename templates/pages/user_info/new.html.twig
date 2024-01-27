@@ -3,6 +3,18 @@
 {% block title %}New UserInfo{% endblock %}
 
 {% block body %}
+
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning mt-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for messages in app.flashes ('success') %}
+        <div class="alert alert-dismissible alert-success ml-4 mt-4">
+            {{ message}}
+        </div>
+        {% endfor %} 
+        
     <h1>Create new UserInfo</h1>
 
     {{ include('pages/user_info/_form.html.twig') }}

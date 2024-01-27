@@ -59,7 +59,7 @@ class UserType extends AbstractType
                         'expanded' => true,
                         'multiple' => true,
                         'label_attr' => [
-                            'class' => 'form-label mt-4 ml-4 darkblue'
+                            'class' => 'form-label mt-4 darkblue'
                         ],
                     ]
                 )               

@@ -58,12 +58,12 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($user);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', ' Le compte a bien été créé ! Il faut maintenant ajouter les information personnelles de l\'utilisateur.');
+            return $this->render('pages/user/show.html.twig',[
+                'user' => $user,
+            ]);
         }
-
         return $this->render('pages/user/new.html.twig', [
-            'user' => $user,
             'form' => $form,
         ]);
     }

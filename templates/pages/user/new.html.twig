@@ -2,7 +2,7 @@
 
 {% block title %}New User{% endblock %}
 
-{% block body %}*
+{% block body %}
     <div class="container">
         <h1>Créer un nouvel utilisateur</h1>
         
@@ -19,6 +19,6 @@
 
         {{ include('pages/user/_form.html.twig') }}
 
-        <a class="btn btn-info mt-4" href="{{ path('app_user_index') }}">back to list</a>
+        <a class="btn btn-info mt-4 mb-4" href="{{ path('app_user_index') }}">back to list</a>
     </div>    
 {% endblock %}

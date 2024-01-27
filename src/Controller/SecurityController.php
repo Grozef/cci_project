@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class SecurityController extends AbstractController
@@ -39,7 +40,8 @@ class SecurityController extends AbstractController
     #[Route('/inscription', 'security.registration', methods: ['GET', 'POST'])]
     public function registration(
         Request $request,
-        EntityManagerInterface $manager
+        EntityManagerInterface $manager,
+        UserPasswordHasherInterface $hasher,
         ): Response {
         $user = new User();
         $user->setRoles(['ROLE_USER']);
@@ -54,7 +56,7 @@ class SecurityController extends AbstractController
                 'success',
                 'Votre compte a bien été créé !'
             );
-            
+
             $manager->persist($user);
             $manager->flush();
 

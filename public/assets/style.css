@@ -39,5 +39,10 @@ body #body{
     color: black;
     text-align: center;
     justify-content: center;
+}
 
+.tbody{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

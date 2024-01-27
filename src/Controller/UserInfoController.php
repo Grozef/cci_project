@@ -226,7 +226,7 @@ class UserInfoController extends AbstractController
 
                     $this->addFlash(
                         'success',
-                        'Les informations de votre compte ont été modifiées avec succés'
+                        'Les informations de ce compte ont été modifiées avec succés'
                     );
                     return $this->redirectToRoute('app_user_info_show', [
                         'user' => $user,

@@ -1,72 +1,68 @@
 <!DOCTYPE html>
 <html id="html">
-<head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
+	<head>
+		<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css">
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/variables.scss">
+			<link rel="stylesheet" href="{{ asset("./assets/style.css") }}">
 
-        {{ encore_entry_link_tags('app') }}
-         {# Vous avez inclus le lien vers la feuille de style Bootstrap minifiée via le CDN de Bootstrap #}
-         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css">
-         {# Vous avez également inclus le lien vers le fichier "variables.scss" de Bootswatch  #}
-         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/variables.scss">
-         {# Vous avez inclus vos propres styles via un fichier local "style.css" #}
-         <link rel="stylesheet" href="{{ asset("./assets/style.css") }}">
-           
-        {% endblock %}
+		{% endblock %}
 
-        {% block javascripts %}
+		{% block javascripts %}
 
-            {{ encore_entry_link_tags('app') }}
-
-
-    
-        {% endblock %}
-    </head>
-    <body id="body" class="container-fluid">
-        
-        <header id="header">
-        {% block header %}  
-            {% include "partials/_header.html.twig" %} 
-        {% endblock %}
-        </header>
-
-<div id="cookiemodal" class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        {{ render(path('ch_cookie_consent.show_if_cookie_consent_not_set')) }}
-      </div>
-    </div>
-  </div>
-</div>
+			{{ encore_entry_link_tags('app') }}
 
 
-        <main id="main">
-            {% block body %}
-        
-            {% endblock %}
-        </main>
+		{% endblock %}
+	</head>
+	<body id="body" class="container-fluid">
 
-        <footer id="footer">
-        {% block footer %}  
-            {% include "partials/_footer.html.twig" %} 
-        {% endblock %}
-        </footer>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"></script>
-        {% if chcookieconsent_isCookieConsentSavedByUser() == false %}
-        <script> 
-        const elem = document.getElementById('cookiemodal');
-        const myModal = new bootstrap.Modal(elem, {}); 
-        document.getElementById('cookie_consent_save').setAttribute("data-bs-dismiss", "modal");
-        myModal.show(); 
-        
-        </script>
-        {% endif %}
-    </body>
-</html>
+		<header id="header">
+			{% block header %}
+				{% include "partials/_header.html.twig" %}
+			{% endblock %}
+		</header>
+
+		<div id="cookiemodal" class="modal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">🍪🍪🍪🍪</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						{{ render(path('ch_cookie_consent.show_if_cookie_consent_not_set')) }}
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<main id="main"> {% block body %}{% endblock %}
+			</main>
+
+			<footer id="footer">
+				{% block footer %}
+					{% include "partials/_footer.html.twig" %}
+				{% endblock %}
+			</footer>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"></script>
+			{% if chcookieconsent_isCookieConsentSavedByUser() == false %}
+				<script>
+					const elem = document.getElementById('cookiemodal');
+          const myModal = new bootstrap.Modal(elem, {});
+          document.getElementById('cookie_consent_save').setAttribute("data-bs-dismiss", "modal");
+          myModal.show();
+				</script>
+			{% endif %}
+		</body>
+	</html>
+
