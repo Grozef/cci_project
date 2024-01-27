@@ -23,7 +23,7 @@ class AdditionnalType extends AbstractType
             ],
             'label' => 'Adresse',
             'label_attr' => [
-                'class' => 'form-label mt-4 darkblue'
+                'class' => 'form-label darkblue'
             ],
             'constraints' => [
                 new Assert\Length(['min' => 2, 'max' => 255]),
@@ -96,6 +96,7 @@ class AdditionnalType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => UserInfo::class,
+            'label' => 'Informations complémentaires',
         ]);
     }
 }

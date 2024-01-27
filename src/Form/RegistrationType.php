@@ -56,7 +56,7 @@ class RegistrationType extends AbstractType
                 ])
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control mb-4',
                     'minlength' => '2',
                     'maxlength' => '180'
                 ],
@@ -70,7 +70,7 @@ class RegistrationType extends AbstractType
                     new Assert\Length(['min'=>2, 'max'=> 180])
                 ]
             ])
-            // inclure les infosUsers dans le controller ?
+
             ->add('userInfo', CollectionType::class, [
                 'entry_type' => AdditionnalType::class,
             ])

@@ -27,7 +27,9 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>Id</th>
+                {% endif %}
                 <th>Title</th>
                 <th>Author</th>
                 <th>Description</th>
@@ -38,14 +40,20 @@
         <tbody>
         {% for book in books %}
             <tr>
-                <td>{{ book.id }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>{{ book.id }}</td>
+                {% endif %}
                 <td>{{ book.title }}</td>
                 <td>{{ book.author }}</td>
                 <td>{{ book.description }}</td>
                 <td>{{ book.price }}</td>
                 <td>
-                    <a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
-                    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
+                    <a href="{{ path('app_book_show', {'id': book.id}) }}"
+                    class="btn btn-primary mt-4 ml-4 lift">show</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_book_edit', {'id': book.id}) }}"
+                        class="btn btn-warning mt-4 ml-4">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -56,6 +64,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_book_new') }}"
-    class="btn btn-primary mt-4 mr-4 ml-4 mb-4" >Create new</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_book_new') }}"
+        class="btn btn-primary mt-4 mr-4 ml-4 mb-4" >Create new</a>
+    {% endif %}
+
 {% endblock %}
