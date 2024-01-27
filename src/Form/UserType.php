@@ -80,10 +80,7 @@ class UserType extends AbstractType
                     new Assert\Length(['min'=>2, 'max'=> 255])
                 ]
             ])
-            ->add('userInfo', CollectionType::class, [
-                'entry_type' => AdditionnalType::class,
-                'label' => 'Informations complémentaires',
-            ])                                        
+                                    
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [

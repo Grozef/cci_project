@@ -73,7 +73,6 @@ class RegistrationType extends AbstractType
             // inclure les infosUsers dans le controller ?
             ->add('userInfo', CollectionType::class, [
                 'entry_type' => AdditionnalType::class,
-                'label' => 'Informations complémentaires',
             ])
 
             ->add('password', RepeatedType::class, [
