@@ -269,6 +269,10 @@ class UserController extends AbstractController
                     'form' => $form->createView()
                 ]);
             }
+        }else {
+            if (!$form->get('recaptcha')->getData() && $form->isSubmitted()) {
+                $this->addFlash('warning', 'Le champ reCAPTCHA doit être coché.');
+            }
         }
 
         return $this->render('pages/user/edit_password.html.twig', [

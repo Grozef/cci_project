@@ -77,10 +77,18 @@ class SecurityController extends AbstractController
             );
 
             return $this->redirectToRoute('security.login');
+        }else {
+            if (!$form->get('recaptcha')->getData() && $form->isSubmitted()) {
+                $this->addFlash('danger', 'Le champ reCAPTCHA doit être coché.');
+                return $this->render('pages/security/registration.html.twig', [
+                    'form' => $form->createView()
+                ]);
+            }
         }
-
         return $this->render('pages/security/registration.html.twig', [
             'form' => $form->createView()
         ]);
+      
+
     }
 }

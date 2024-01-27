@@ -4,6 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -51,7 +52,7 @@ class UserPasswordType extends AbstractType
             ],
             'second_options' => [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control mb-4'
                 ],
                 'label' => 'Confirmation du nouveau mot de passe',
                 'label_attr' => [
@@ -61,9 +62,15 @@ class UserPasswordType extends AbstractType
             'invalid_message' => 'Les nouveaux mots de passe ne correspondent pas'
         ])  
 
+        ->add("recaptcha", ReCaptchaType::class, [
+            'label_attr' => [
+                'class' => 'form-label mt-4'
+            ],
+        ])
+
         ->add('submit', SubmitType::class, [
             'attr' => [
-                'class' => 'btn btn-primary mt-4'
+                'class' => 'btn btn-primary mt-4 mb-4'
             ],
             'label' => 'Changer mon mot de passe'
         ]);

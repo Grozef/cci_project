@@ -7,11 +7,11 @@
     <div class="container darkblue">
         <h1 class="mt-4">Formulaire de connexion</h1>
         
-        {% if app.flashes('danger') is not empty %}
+        {% for message in app.flashes('danger') %}
             <div class="alert alert-danger mt-4">
-                {{ app.flashes('danger')|join('<br>') }}
+                {{ message }}
             </div>
-        {% endif %}
+        {% endfor %}
 
         {% for message in app.flashes('success') %}
             <div class="alert alert-success mt-4">
