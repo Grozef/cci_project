@@ -3,10 +3,10 @@
 {% block title %}User index {% endblock %}
 
 {% block body %}
-    <h1 class="ml-4 mt-4">Liste des utilisateurs</h1>
+    <h1 class=" mt-4 ml-4">Liste des utilisateurs</h1>
 
     {% for messages in app.flashes ('success') %}
-        <div class="alert alert-dismissible alert-success ml-4 mt-4">
+        <div class="alert alert-dismissible alert-success ml-4 mt-4 ">
             {{ message}}
         </div>
     {% endfor %}

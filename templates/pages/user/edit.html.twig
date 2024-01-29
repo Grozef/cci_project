@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="">Modification des informations de l'utilisateur ({{user.name}}) </h1>
+        <h1 class="mt-4">Modification des informations de l'utilisateur ({{user.name}}) </h1>
         {% for message in app.flashes('warning') %}
             <div class="alert alert-warning mt-4">
                 {{ message }}
