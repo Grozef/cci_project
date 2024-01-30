@@ -21,7 +21,7 @@
 
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('app_user_info_index') }}"
-            class="btn btn-primary mt-4 mr-4 mb-4" >back to list</a>
+            class="buttonbutton mt-4 mr-4 mb-4" >back to list</a>
 
             {{ include('pages/user_info/_delete_form.html.twig') }}
 

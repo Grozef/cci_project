@@ -95,25 +95,24 @@ class UserInfoController extends AbstractController
     #[Route('/{id}', name: 'app_user_info_show', methods: ['GET', 'POST'])]
     public function show(UserInfo $userInfo, User $user): Response
     {   
-        $targetUser = $userInfo ->getId();
-
+        $currentUser = $this->getUser();
         if ($this->isGranted('ROLE_ADMIN')) {
             return $this->render('pages/user_info/show.html.twig', [
                 'user_info' => $userInfo,
                 'user' => $user,
             ]);
-        } elseif ($targetUser == $user->getId()) {
+        } elseif ($user == $this->getUser()) {
             return $this->render('pages/user_info/show.html.twig', [
                 'user_info' => $userInfo,
                 'user' => $user,
             ]);
-        } elseif ($targetUser !== $user->getId()) {
+        } elseif ($user !== $this->getUser()) {
             $this->addFlash('warning', ' Vous essayez d\'accéder à un profil qui n\'est pas le votre !');
         }
         
         return $this->render('pages/user_info/show.html.twig', [
             'user_info' => $userInfo,
-            'user' => $user,
+            'user' => $currentUser,
 
         ]);
     }

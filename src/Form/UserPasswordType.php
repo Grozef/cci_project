@@ -70,7 +70,7 @@ class UserPasswordType extends AbstractType
 
         ->add('submit', SubmitType::class, [
             'attr' => [
-                'class' => 'btn btn-primary mt-4 mb-4'
+                'class' => 'buttonbuttonmodif mt-4 mb-4'
             ],
             'label' => 'Changer mon mot de passe'
         ]);

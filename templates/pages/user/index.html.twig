@@ -3,10 +3,11 @@
 {% block title %}User index {% endblock %}
 
 {% block body %}
-    <h1 class="ml-4 mt-4">Liste des utilisateurs</h1>
+<div class="container mb-4">
+    <h1 class=" mt-4 ml-4">Liste des utilisateurs</h1>
 
     {% for messages in app.flashes ('success') %}
-        <div class="alert alert-dismissible alert-success ml-4 mt-4">
+        <div class="alert alert-dismissible alert-success ml-4 mt-4 ">
             {{ message}}
         </div>
     {% endfor %}
@@ -55,11 +56,15 @@
         </tbody>
     </table>
 
-    <div class="navigation d-flex justify-content-center mt-4">
-        <ul class="navigation d-flex justify-content-center mt-4">{{ knp_pagination_render(users) }}</ul>    
-    </div>
+<div class="containerpagination mt-4 mb-5">
+  <ul class="pagination">
+    <li class="mb-3">
+  {#{{ knp_pagination_render(users) }}#}    <a href="#" class="previous">{{ knp_pagination_render(users, '@KnpPaginator/Pagination/sliding.html.twig') }}</a>  
+    </li>
+  </ul>
+</div>
 
     <a href="{{ path('app_user_new') }}"
-    class="btn btn-primary mt-4 mr-4 ml-4 mb-4">Create new</a>
-
+    class="buttonbuttonnew mt-4 mb-4">Create new</a>
+</div>
 {% endblock %}

@@ -3,6 +3,7 @@
 {% block title %}Mon profil{% endblock %}
 
 {% block body %}
+<div class="container-fluid mb-5">
     {% for message in app.flashes('warning') %}
         <div class="alert alert-warning mt-4">
             {{ message }}
@@ -58,15 +59,16 @@
             </tr>
         </tbody>
     </table>
-    {% if is_granted('ROLE_ADMIN') %}
-    <div class="mt-2">
+ 
+    <div class="mt-5 mb-4">
+       {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('app_user_info_index') }}"
-        class="btn btn-primary mt-4 mr-4 ml-4">back to list</a>
-    </div>
+        class="buttonbutton mt-4 mr-4 ml-4">back to list</a>
+
     {% endif %}
 
     <a href="{{ path('app_user_info_edit', {'id': user.id}) }}"
-    class="btn btn-warning mt-4 ml-4 mb-4">edit</a>
-    
-
+    class="buttonbuttonmodif mt-4 mb-4">edit</a>
+ </div>   
+ </div>
 {% endblock %}

@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="">Modification des informations de l'utilisateur ({{user.name}}) </h1>
+        <h1 class="mt-4">Modification des informations de l'utilisateur ({{user.name}}) </h1>
         {% for message in app.flashes('warning') %}
             <div class="alert alert-warning mt-4">
                 {{ message }}
@@ -15,12 +15,12 @@
             {{ message}}
         </div>
         {% endfor %} 
-            <div>
+            <div class="container">
                 {{ include('pages/user/_form.html.twig', {'button_label': 'Update'}) }} 
                 
         {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('app_user_index') }}"
-                class="btn btn-warning mt-4"> back to list</a>
+                class="buttonbutton mt-4 mb-4"> back to list</a>
 
                 {{ include('pages/user/_delete_form.html.twig') }}
         {% endif %}

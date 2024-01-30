@@ -106,7 +106,7 @@ class RegistrationType extends AbstractType
 
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4 mb-4'
+                    'class' => 'buttonbutton mt-4 mb-4'
                 ],
 
             ]);

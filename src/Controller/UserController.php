@@ -190,8 +190,6 @@ class UserController extends AbstractController
     }
 
     // This controller allows an admin to delete an user's profile
-
-    // a ameliorer pour delete les deux entites en meme temps
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserInfo $userInfo, EntityManagerInterface $entityManager): Response

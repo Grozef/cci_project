@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <h1>Créer un nouvel utilisateur</h1>
+        <h1 class= "mt-4">Créer un nouvel utilisateur</h1>
         
         {% for message in app.flashes('warning') %}
             <div class="alert alert-warning mt-4">
@@ -18,7 +18,8 @@
         {% endfor %} 
 
         {{ include('pages/user/_form.html.twig') }}
-
-        <a class="btn btn-info mt-4 mb-4" href="{{ path('app_user_index') }}">back to list</a>
-    </div>    
+<div class="mt-4 mb-4">
+        <a class="buttonbutton mt-4 mb-4" href="{{ path('app_user_index') }}">back to list</a>
+    </div>   
+    </div> 
 {% endblock %}
