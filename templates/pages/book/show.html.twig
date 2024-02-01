@@ -10,7 +10,9 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
 
 	<div class="container">
-		<h1 class="titre-site mt-4 ml-4"> {{ book.title}}  </h1>
+		<h1 class="titre-site mt-4 ml-4">
+			{{ book.title}}
+		</h1>
 
 		<main class="main-card">
 			<div class="card-card">
@@ -31,8 +33,10 @@
 				</div>
 			</div>
 		</main>
+	</div>
 
-		<table class="table">
+	<div class="container">
+		<table class="table mb-4 darkblue">
 			<tbody>
 				<tr>
 					<th>Id</th>
@@ -56,13 +60,21 @@
 				</tr>
 			</tbody>
 		</table>
-
-		<a href="{{ path('app_book_index') }}" class="buttonbutton ">Retour à la liste</a>
-
-		<a href="{{ path('app_book_edit', {'id': book.id}) }}" class="buttonbuttonmodif ml-4">Modification</a>
-<div class="mt-2">
-		{{ include('pages/book/_delete_form.html.twig') }}
-</div>
 	</div>
+	<div class="container">
+		<div class="mt-2 mb-4">
+			<a href="{{ path('app_book_index') }}" class="buttonbutton mt-4 mb-4">Retour à la liste</a>
+		</div>
+		{% if is_granted('ROLE_ADMIN') %}
+			<div class="mt-5">
+				<a href="{{ path('app_book_edit', {'id': book.id}) }}" class="buttonbuttonmodif">Modification</a>
+			</div>
+			<div class="mt-2">
+				{{ include('pages/book/_delete_form.html.twig') }}
+			</div>
+		{% endif %}
+	</div>
+
+
 {% endblock %}
 

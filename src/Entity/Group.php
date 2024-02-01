@@ -16,7 +16,7 @@ class Group
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name_group = null;
+    public ?string $name_group = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $CreationDate = null;
@@ -24,6 +24,9 @@ class Group
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Book $id_book = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy:'groups')]
+    private $participants;
 
     public function getId(): ?int
     {

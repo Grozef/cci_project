@@ -44,8 +44,8 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.pseudonym }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-primary mt-4 mr-4">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning mt-4">edit</a>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-primary mt-4 mr-4">Voir</a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning mt-4">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -65,6 +65,6 @@
 </div>
 
     <a href="{{ path('app_user_new') }}"
-    class="buttonbuttonnew mt-4 mb-4">Create new</a>
+    class="buttonbuttonnew mt-4 mb-4">Creation</a>
 </div>
 {% endblock %}

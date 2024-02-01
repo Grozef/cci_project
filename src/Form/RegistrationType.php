@@ -108,6 +108,7 @@ class RegistrationType extends AbstractType
                 'attr' => [
                     'class' => 'buttonbutton mt-4 mb-4'
                 ],
+                'label' => 'Enregistrer'
 
             ]);
         ;

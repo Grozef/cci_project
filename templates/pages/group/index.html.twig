@@ -1,41 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Group index{% endblock %}
+{% block title %}Group index
+{% endblock %}
 
 {% block body %}
-    <h1>Group index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>IdBook</th>
-                <th>IdUser</th>
-                <th>CreationDate</th>
-                <th>ReunionDate</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for group in groups %}
-            <tr>
-                <td>{{ group.id }}</td>
-                <td>{{ group.IdBook }}</td>
-                <td>{{ group.IdUser }}</td>
-                <td>{{ group.CreationDate ? group.CreationDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ group.ReunionDate ? group.ReunionDate|date('Y-m-d H:i:s') : '' }}</td>
+	<div class="container-fluid">
+		<div class="mt-4 mb-4 titre-site">
+			<h1>Liste des groupes</h1>
+		</div>
+		<table class="table darkblue mb-4 ml-4">
+			<thead>
+				<tr>
+				{% if is_granted('ROLE_ADMIN')%}
+					<th>Id</th>
+				{% endif %}	
+					<th>Livre</th>
+					<th>Nom de la réunion</th>
+					<th>Participants</th>					
+					<th>Date</th>
+				{% if is_granted('ROLE_ADMIN')%}
+					<th> Actions </th>
+				{% endif %}	
+				</tr>
+			</thead>
+			<tbody>
+				{% for group in groups %}
+					<tr>
+					{% if is_granted('ROLE_ADMIN')%}
+						<td>{{ group.id }}</td>
+					{% endif %}	
+						<td>{{ group.IdBook }}</td>
+						<td>{{ group.name_group }}</td>
+						<td>{#{{ group.IdUser }}   a brancher avec ingroup#}</td>						
+						<td>{{ group.CreationDate ? group.CreationDate|date('Y-m-d H:i:s') : '' }}</td>
+					{% if is_granted('ROLE_ADMIN')%}
                 <td>
-                    <a href="{{ path('app_group_show', {'id': group.id}) }}">show</a>
-                    <a href="{{ path('app_group_edit', {'id': group.id}) }}">edit</a>
+                    <a href="{{ path('app_group_show', {'id': group.id}) }}" class="btn btn-primary mt-4 mr-4">Voir</a>
+                    <a href="{{ path('app_group_edit', {'id': group.id}) }}" class="btn btn-warning mt-4">Modifier</a>
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+					{% endif %}
+					</tr>
+				{% else %}
 
-    <a href="{{ path('app_group_new') }}">Create new</a>
+					<tr>
+						<td colspan="6">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="mt-4 mb-4">
+			{% if is_granted('ROLE_ADMIN') %}
+				<a href="{{ path('app_group_new') }}" class="buttonbuttonnew">Creation d'un groupe</a>
+         {#   <div class="mt-2">
+				{{ include('pages/group/_delete_form.html.twig') }}
+			</div>   #}
+			{% endif %}
+		</div>
+	</div>
+
 {% endblock %}
+
