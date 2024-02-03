@@ -31,10 +31,13 @@ class InGroupController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($inGroup);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('app_group_index', [], Response::HTTP_SEE_OTHER);
+            return $this->render('pages/legals/erreur.html.twig');
+            // a decocher des le changement de foreign key
+
+         //   $entityManager->persist($inGroup);
+         //   $entityManager->flush();
+          //  return $this->redirectToRoute('app_group_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('pages/group/new.html.twig', [
