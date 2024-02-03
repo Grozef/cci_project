@@ -3,6 +3,7 @@
 {% block title %}UserInfo index{% endblock %}
 
 {% block body %}
+
 <div class="container-fluid mb-4 mr-4">
     <h1 class="ml-4 mt-4">Liste des utilisateurs</h1>
 
@@ -22,8 +23,8 @@
         <h5> Il y a {{ user_infos.getTotalItemCount }} Utilisateurs enregistrés </h5>
     </div>
     {% endif %}
-
-    <table class="table mt-4 ml-4 blue">
+<div class="table-responsive-md">
+    <table class="table mt-4 ml-4 blue table-bordered">
         <thead>
             <tr class="table-active">
                 <th scope="row">Id</th>
@@ -58,10 +59,11 @@
                     <td>{{ user.email }}</td> 
                
                 <td>
-                    <a href="{{ path('app_user_info_show', {'id': user_info.id}) }}" class="btn btn-primary mt-4 mr-4">show</a>
-                    <a href="{{ path('app_user_info_edit', {'id': user_info.id}) }}" class="btn btn-warning mt-4">edit</a>
+                    <a href="{{ path('app_user_info_show', {'id': user_info.id}) }}" class="btn btn-primary mt-4 mr-4">Voir</a>
+                    <a href="{{ path('app_user_info_edit', {'id': user_info.id}) }}" class="btn btn-warning mt-4">Modifier</a>
                 </td>
             </tr>
+            
         {% else %}
             <tr>
                 <td colspan="7">no records found</td>
@@ -70,6 +72,7 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 <div class="containerpagination mt-4 mb-5">
   <ul class="pagination">
     <li class="mb-3">
@@ -79,6 +82,6 @@
 </div>
 
     <a href="{{ path('app_user_new') }}"
-    class="buttonbuttonnew ml-2 mt-5 mb-4">Create new</a>
+    class="buttonbuttonnew ml-2 mt-5 mb-4">Creation</a>
 </div>
 {% endblock %}

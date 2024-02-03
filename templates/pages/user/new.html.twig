@@ -1,25 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New User{% endblock %}
+{% block title %}New User
+{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1 class= "mt-4">Créer un nouvel utilisateur</h1>
-        
-        {% for message in app.flashes('warning') %}
-            <div class="alert alert-warning mt-4">
-                {{ message }}
-            </div>
-        {% endfor %}
-        {% for messages in app.flashes ('success') %}
-        <div class="alert alert-dismissible alert-success ml-4 mt-4">
-            {{ message}}
-        </div>
-        {% endfor %} 
+	<div class="container mb-4">
+		<h1 class="mt-4">Créer un nouvel utilisateur</h1>
 
-        {{ include('pages/user/_form.html.twig') }}
-<div class="mt-4 mb-4">
-        <a class="buttonbutton mt-4 mb-4" href="{{ path('app_user_index') }}">back to list</a>
-    </div>   
-    </div> 
+		{% for message in app.flashes('warning') %}
+			<div class="alert alert-warning mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for messages in app.flashes ('success') %}
+			<div class="alert alert-dismissible alert-success ml-4 mt-4">
+				{{ message}}
+			</div>
+		{% endfor %}
+
+		{{ include('pages/user/_form.html.twig') }}
+
+		<div class="mt-5 mb-5">
+			<a class="buttonbutton mt-4 mb-4" href="{{ path('app_user_index') }}">Retour a la liste</a>
+		</div>
+	</div>
+
 {% endblock %}
+

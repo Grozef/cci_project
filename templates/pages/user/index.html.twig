@@ -22,8 +22,8 @@
         <h5> Il y a {{ users.getTotalItemCount }} Utilisateurs enregistrés </h5>
     </div>
     {% endif %}
-    
-    <table class="table blue mt-4 ml-4">
+<div class="table-responsive-md">    
+    <table class="table blue mt-4 ml-4 table-bordered">
         <thead>
             <tr>
                 <th>Id</th>
@@ -44,8 +44,8 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.pseudonym }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-primary mt-4 mr-4">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning mt-4">edit</a>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-primary mt-4 mr-4">Voir</a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning mt-4">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -55,8 +55,8 @@
         {% endfor %}
         </tbody>
     </table>
-
-<div class="containerpagination mt-4 mb-5">
+</div>
+<div class="containerpagination mt-4 mb-5 ml-4">
   <ul class="pagination">
     <li class="mb-3">
   {#{{ knp_pagination_render(users) }}#}    <a href="#" class="previous">{{ knp_pagination_render(users, '@KnpPaginator/Pagination/sliding.html.twig') }}</a>  
@@ -65,6 +65,6 @@
 </div>
 
     <a href="{{ path('app_user_new') }}"
-    class="buttonbuttonnew mt-4 mb-4">Create new</a>
+    class="buttonbuttonnew mt-4 mb-4 ml-4">Creation</a>
 </div>
 {% endblock %}

@@ -25,13 +25,12 @@
 
 				<!-- Tous les utilisateurs -->
 				{% if app.user %}
-
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_user_info_show', {id : app.user.id}) }}">Mon profil
+						<a class="nav-link" href="{{ path('app_in_group') }}">S'inscrire dans un groupe 
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_group_index') }}">inscription reunion a brancher
+						<a class="nav-link" href="{{ path('app_user_info_show', {id : app.user.id}) }}">Mon profil
 						</a>
 					</li>
 					<!-- Tous les admins -->
