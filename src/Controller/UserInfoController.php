@@ -26,11 +26,12 @@ class UserInfoController extends AbstractController
 {
     #[IsGranted("ROLE_USER")]
     #[Route('/', name: 'app_user_info_index', methods: ['GET'])]
-    public function index(UserInfoRepository $userInfoRepository,
-                        UserRepository $userRepository,
-                        PaginatorInterface $paginator,
-                        Request $request
-                        ): Response {
+    public function index(
+        UserInfoRepository $userInfoRepository,
+        UserRepository $userRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
 
         $user_infos = $paginator->paginate(
             $userInfoRepository->findAll(),
@@ -43,20 +44,20 @@ class UserInfoController extends AbstractController
             10
         );
 
-        if($this->isGranted('ROLE_ADMIN')){
+        if ($this->isGranted('ROLE_ADMIN')) {
             return $this->render('pages/user_info/index.html.twig', [
                 'user_infos' => $user_infos,
                 'users' => $users,
             ]);
-        }elseif($this->isGranted('ROLE_USER')){
+        } elseif ($this->isGranted('ROLE_USER')) {
             //Variable "user_info" a recupérer, render home ?
             $user = $this->getUser();
-                $this->addFlash('warning', ' Vous n\'avez pas accès à la liste des utilisateurs inscrits, contactez un Admin !');
-                return $this->render('pages/home.html.twig', [
-                    'user_infos' => $user_infos,
-                    'users' => $users,
-                    'user' => $user,
-                ]);        
+            $this->addFlash('warning', ' Vous n\'avez pas accès à la liste des utilisateurs inscrits, contactez un Admin !');
+            return $this->render('pages/home.html.twig', [
+                'user_infos' => $user_infos,
+                'users' => $users,
+                'user' => $user,
+            ]);
         }
         return $this->render('pages/user_info/index.html.twig', [
             'user_infos' => $userInfoRepository->findAll(),
@@ -94,7 +95,7 @@ class UserInfoController extends AbstractController
     #[IsGranted("ROLE_USER")]
     #[Route('/{id}', name: 'app_user_info_show', methods: ['GET', 'POST'])]
     public function show(UserInfo $userInfo, User $user): Response
-    {   
+    {
         $currentUser = $this->getUser();
         if ($this->isGranted('ROLE_ADMIN')) {
             return $this->render('pages/user_info/show.html.twig', [
@@ -109,7 +110,7 @@ class UserInfoController extends AbstractController
         } elseif ($user !== $this->getUser()) {
             $this->addFlash('warning', ' Vous essayez d\'accéder à un profil qui n\'est pas le votre !');
         }
-        
+
         return $this->render('pages/user_info/show.html.twig', [
             'user_info' => $userInfo,
             'user' => $currentUser,
@@ -129,20 +130,20 @@ class UserInfoController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
- 
-                    $userInfo = $form->getData();
-                    $entityManager->persist($userInfo);
-                    $entityManager->flush();
 
-                    $this->addFlash(
-                        'success',
-                        'Les informations de ce compte ont été modifiées avec succés'
-                    );
-                    return $this->redirectToRoute('app_user_info_show', [
-                        'user' => $user,
-                        'id' => $user->getId()
-                    ]);
-                } 
+                $userInfo = $form->getData();
+                $entityManager->persist($userInfo);
+                $entityManager->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Les informations de ce compte ont été modifiées avec succés'
+                );
+                return $this->redirectToRoute('app_user_info_show', [
+                    'user' => $user,
+                    'id' => $user->getId()
+                ]);
+            }
         } elseif ($user == $this->getUser()) {
             $form = $this->createForm(UserInfoType::class, $userInfo);
             //cacher le champs role à un simple User
@@ -151,19 +152,19 @@ class UserInfoController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                    $userInfo = $form->getData();
-                    $entityManager->persist($userInfo);
-                    $entityManager->flush();
+                $userInfo = $form->getData();
+                $entityManager->persist($userInfo);
+                $entityManager->flush();
 
-                    $this->addFlash(
-                        'success',
-                        'Les informations de votre compte ont été modifiées avec succés'
-                    );
-                    return $this->redirectToRoute('app_user_info_show', [
-                        'user' => $user,
-                        'id' => $user->getId()
-                    ]);
-                } 
+                $this->addFlash(
+                    'success',
+                    'Les informations de votre compte ont été modifiées avec succés'
+                );
+                return $this->redirectToRoute('app_user_info_show', [
+                    'user' => $user,
+                    'id' => $user->getId()
+                ]);
+            }
         } elseif ($this->getUser() !== $user) {
             $this->addFlash(
                 'warning',
@@ -186,7 +187,7 @@ class UserInfoController extends AbstractController
     #[Route('/{id}', name: 'app_user_info_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserInfo $userInfo, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$userInfo->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $userInfo->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->remove($userInfo);
             $entityManager->flush();

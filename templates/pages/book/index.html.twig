@@ -1,88 +1,89 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}Book index{% endblock %}
+{% block title %}Book index
+{% endblock %}
 
 {% block body %}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto:wght@300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<div class="container-fluid">
-    <h1 class="titre-site mt-4 ml-4">Liste des livres</h1>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto:wght@300&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+	<div class="container-fluid">
+		<h1 class="titre-site mt-4 ml-4">Liste des livres</h1>
 
-    {% for message in app.flashes('warning') %}
-        <div class="alert alert-warning mt-4">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-dismissible alert-success mt-4">
-            {{ message }}
-        </div>
-    {% endfor %}
+		{% for message in app.flashes('warning') %}
+			<div class="alert alert-warning mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-dismissible alert-success mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
 
-{# voici comment faire des commentaires en Twig 🍕🍕
-    {% if not books is same as ([]) %}
-    <div class="count ml-4 mt-4">
-        <h5> Il y a {{ books.getTotalItemCount }} livres enregistrés </h5> 
-    </div>
-    {% endif %} #}
+		{# voici comment faire des commentaires en Twig 🍕🍕
+		    {% if not books is same as ([]) %}
+		    <div class="count ml-4 mt-4">
+		        <h5> Il y a {{ books.getTotalItemCount }} livres enregistrés </h5> 
+		    </div>
+		    {% endif %} #}
 
 
+		<div class="row">
+			<div class="container">
+				<div class="row gx-4 gx-lg-5">
+					{% for book in books %}
+						<div class="col-md-6 mb-4">
+							<main class="main-card">
+								<div class="card-card ">
+									<img class="img-card" src="https://images.noosfere.org/couv/l/ldp24366-2023.jpg" alt="page de couverture du livre">
+									<div class="card-content-card">
+										<h2 class="h2-card">
+											{{ book.title }}
+										</h2>
+										<p class="p-card text-truncate">
+											{{ book.description }}
+										</p>
+										<a href="#" class="button-card">
+											La suite ...
+											<span class="material-symbols-outlined-card">
+												arrow_right_alt
+											</span>
+										</a>
+									</div>
+								</div>
+							</main>
+							<div class="boutonsCard text-center">
+								<div class="comlumn mt-4 mb-4">
+									<a href="{{ path('app_book_show', {'id': book.id}) }}" class="buttonbutton ml-2 lift">Fiche livre</a>
+									{% if is_granted('ROLE_ADMIN') %}
+										<a href="{{ path('app_book_edit', {'id': book.id}) }}" class=" buttonbuttonmodif ml-2">Modification</a>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
 
-<div class="row">
-    <div class="container">
-        <div class="row gx-4 gx-lg-5">
-            {% for book in books %}
-                <div class="col-md-6 mb-4">
-                    <main class="main-card">
-                        <div class="card-card ">
-                            <img class="img-card" src="https://images.noosfere.org/couv/l/ldp24366-2023.jpg" alt="page de couverture du livre">
-                            <div class="card-content-card">
-                                <h2 class="h2-card">
-                                    {{ book.title }}
-                                </h2>
-                                <p class="p-card text-truncate">
-                                    {{ book.description }}
-                                </p>
-                                <a href="#" class="button-card">
-                                    La suite ... 
-                                    <span class="material-symbols-outlined-card">
-                                        arrow_right_alt
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </main>
-                    <div class="boutonsCard text-center">
-                        <div class="comlumn mt-4 mb-4">
-                            <a href="{{ path('app_book_show', {'id': book.id}) }}" class="buttonbutton ml-2 lift">Fiche livre</a>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('app_book_edit', {'id': book.id}) }}" class=" buttonbuttonmodif ml-2">Modification</a>   
-                        {% endif %}
-                        </div> 
-                    </div>        
-                </div>
-            {% endfor %}  
-        </div>
-    </div>
-</div>
+		<div class="containerpagination mt-4">
+			<ul class="pagination">
+				<li class="">
+					{{ knp_pagination_render(books, '@KnpPaginator/Pagination/sliding.html.twig') }}
+					{#<a href="#" class="previous">{{ knp_pagination_render(books) }}</a> #}
+				</li>
+			</ul>
+		</div>
 
-<div class="containerpagination mt-4">
-  <ul class="pagination">
-    <li class="">
-    {{ knp_pagination_render(books, '@KnpPaginator/Pagination/sliding.html.twig') }}
-    {#<a href="#" class="previous">{{ knp_pagination_render(books) }}</a> #}
-    </li>
-  </ul>
-</div>
-
-<div class="ml-4 mb-5 mt-5">
-{% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('app_book_new') }}" class="buttonbuttonnew ml-2">Nouveau livre</a>   
-{% endif %}    
-</div> 
-</div>   
+		<div class="ml-4 mb-5 mt-5">
+			{% if is_granted('ROLE_ADMIN') %}
+				<a href="{{ path('app_book_new') }}" class="buttonbuttonnew ml-2">Nouveau livre</a>
+			{% endif %}
+		</div>
+	</div>
 {% endblock %}
+

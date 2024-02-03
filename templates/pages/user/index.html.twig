@@ -1,70 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index {% endblock %}
+{% block title %}User index
+{% endblock %}
 
 {% block body %}
-<div class="container mb-4">
-    <h1 class=" mt-4 ml-4">Liste des utilisateurs</h1>
+	<div class="container mb-4">
+		<h1 class=" mt-4 ml-4">Liste des utilisateurs</h1>
 
-    {% for messages in app.flashes ('success') %}
-        <div class="alert alert-dismissible alert-success ml-4 mt-4 ">
-            {{ message}}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('warning') %}
-        <div class="alert alert-warning mt-4">
-            {{ message }}
-        </div>
-    {% endfor %}    
+		{% for messages in app.flashes ('success') %}
+			<div class="alert alert-dismissible alert-success ml-4 mt-4 ">
+				{{ message}}
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('warning') %}
+			<div class="alert alert-warning mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
 
-    {% if not users is same as ([]) %}
-    <div class="count ml-4 mt-4">
-        <h5> Il y a {{ users.getTotalItemCount }} Utilisateurs enregistrés </h5>
-    </div>
-    {% endif %}
-<div class="table-responsive-md">    
-    <table class="table blue mt-4 ml-4 table-bordered">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Name</th>
-                <th>Pseudonym</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-{# voici comment faire des commentaires en Twig 🍕🍕#}        
-        {% for user in users %}
-            <tr class="table-active">
-                <th scope="row">{{ user.id}}</th>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.pseudonym }}</td>
-                <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-primary mt-4 mr-4">Voir</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning mt-4">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
-<div class="containerpagination mt-4 mb-5 ml-4">
-  <ul class="pagination">
-    <li class="mb-3">
-  {#{{ knp_pagination_render(users) }}#}    <a href="#" class="previous">{{ knp_pagination_render(users, '@KnpPaginator/Pagination/sliding.html.twig') }}</a>  
-    </li>
-  </ul>
-</div>
+		{% if not users is same as ([]) %}
+			<div class="count ml-4 mt-4">
+				<h5>
+					Il y a
+					{{ users.getTotalItemCount }}
+					Utilisateurs enregistrés
+				</h5>
+			</div>
+		{% endif %}
+		<div class="table-responsive-md">
+			<table class="table blue mt-4 ml-4 table-bordered">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Email</th>
+						<th>Roles</th>
+						<th>Name</th>
+						<th>Pseudonym</th>
+						<th>actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{# voici comment faire des commentaires en Twig 🍕🍕#}
+					{% for user in users %}
+						<tr class="table-active">
+							<th scope="row">{{ user.id}}</th>
+							<td>{{ user.email }}</td>
+							<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+							<td>{{ user.name }}</td>
+							<td>{{ user.pseudonym }}</td>
+							<td>
+								<a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-primary mt-4 mr-4">Voir</a>
+								<a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning mt-4">Modifier</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="7">no records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="containerpagination mt-4 mb-5 ml-4">
+			<ul class="pagination">
+				<li
+					class="mb-3">
+					{#{{ knp_pagination_render(users) }}#}
+					<a href="#" class="previous">{{ knp_pagination_render(users, '@KnpPaginator/Pagination/sliding.html.twig') }}</a>
+				</li>
+			</ul>
+		</div>
 
-    <a href="{{ path('app_user_new') }}"
-    class="buttonbuttonnew mt-4 mb-4 ml-4">Creation</a>
-</div>
+		<a href="{{ path('app_user_new') }}" class="buttonbuttonnew mt-4 mb-4 ml-4">Creation</a>
+	</div>
 {% endblock %}
+
