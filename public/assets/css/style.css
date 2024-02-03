@@ -60,11 +60,15 @@ body #body{
     color: rgb(1, 1, 59);
 }
 
-/*  */
+/* page d'erreur */
 .erreur{
     color: black;
     text-align: center;
     justify-content: center;
+}
+
+.erreurImage{
+    max-width: 100%;
 }
 
 .tbody{

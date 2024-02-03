@@ -1,30 +1,41 @@
-  <!-- Site footer -->
-    <footer class="site-footer mt-4">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-12 col-md-6">
-            <h6>About</h6>
-            <p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by <a href="{{ path('legals_erreur') }}">Lisowski François</a> </p>
-          </div>
+<!-- Site footer -->
+<footer class="site-footer mt-4">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 col-md-6">
+				<h6 class="titre-site mb-4">A propos :
+					<a href="{{ path('legals_erreur') }}">Formulaire de contact</a>
+				</h6>
 
+				<p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by
+					<a href="{{ path('legals_erreur') }}">Lisowski François</a>
+				</p>
+			</div>
 
-          <div class="col-xs-6 col-md-3">
-            <h6>Sites Connexes</h6>
-            <ul class="footer-links">
-              <li><a href="https://mediatheques.villeurbanne.fr/" target="blank">Médiathèques de Villeurbanne</a></li>
-              <li><a href="https://bm.mairie-vaulxenvelin.fr/" target="blank">Bibliothèques municipales de Vaulx-en-Velin</a></li>
-            </ul>
-          </div>
+			<div class="col-xs-6 col-md-3">
+				<h6>Sites Connexes</h6>
+				<ul class="footer-links">
+					<li>
+						<a href="https://mediatheques.villeurbanne.fr/" target="blank">Médiathèques de Villeurbanne</a>
+					</li>
+					<li>
+						<a href="https://bm.mairie-vaulxenvelin.fr/" target="blank">Bibliothèques municipales de Vaulx-en-Velin</a>
+					</li>
+				</ul>
+			</div>
 
-          <div class="col-xs-6 col-md-3">
-            <h6>Liens Annexes</h6>
-            <ul class="footer-links">
-              <li><a href="{{ path('legals_confidentialite') }}">Politique de confidentialité</a></li>
-              <li><a href="{{ path('legals_mentions') }}">Mentions légales</a></li>
-              <li><a href="{{ path('legals_erreur') }}" >Formulaire de contact</a></li>
-            </ul>
-          </div>
-        </div>
-        <hr>
-      </div>
+			<div class="col-xs-6 col-md-3">
+				<h6>Liens Annexes</h6>
+				<ul class="footer-links">
+					<li>
+						<a href="{{ path('legals_confidentialite') }}">Politique de confidentialité</a>
+					</li>
+					<li>
+						<a href="{{ path('legals_mentions') }}">Mentions légales</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<hr>
+	</div>
 </footer>
