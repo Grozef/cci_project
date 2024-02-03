@@ -84,8 +84,13 @@ body #body{
   }
 
 #boutonNavBar{
-    color: rgb(1, 1, 59);
-    background-color: #1E616C;
+    color: #85EDEE;
+    background-color: white;
+    background-image: url('./../img/logo2.png');
+    background-size: 70px;
+    width: 70px;
+    height: 50px;
+    border: 2px solid;
 }
 
 /* card book */
@@ -178,7 +183,7 @@ body #body{
 }
 
 .btn-card-show{
-  color: #1E616C;
+   color: #1E616C; 
 }
 
 
@@ -349,4 +354,12 @@ font-family: 'Dijkstra-Regular';
 .pagination li a:hover,
 .pagination li.active a {
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* logo menu mobile */
+
+#logoMobile{
+  max-width: 45px;
+  max-height: 45px;
+  background-image: image('./../img/logo2.png');
 }
