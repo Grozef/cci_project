@@ -47,12 +47,12 @@
 	</table>
 
 	{% if app.user and is_granted('ROLE_ADMIN') %}
-		<div class="mt-2">
-			<a href="{{ path('app_user_index') }}" class="btn btn-primary mt-4 mr-4 ml-4">back to list</a>
+		<div class="mt-4 mb-5 ml-5">
+			<a href="{{ path('app_user_index') }}" class="buttonbutton ">Retour a la liste</a>
 		</div>
 	{% endif %}
-
-	<a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning mt-4 ml-4">edit</a>
-
+<div class="mt-4 mb-5 ml-5">
+	<a href="{{ path('app_user_edit', {'id': user.id}) }}" class="buttonbuttonmodif ">Modifier</a>
+</div>
 {% endblock %}
 

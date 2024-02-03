@@ -105,12 +105,11 @@ class UserInfoController extends AbstractController
         } elseif ($user == $this->getUser()) {
             return $this->render('pages/user_info/show.html.twig', [
                 'user_info' => $userInfo,
-                'user' => $user,
+                'user' => $currentUser,
             ]);
-        } elseif ($user !== $this->getUser()) {
+        } elseif ($user !== $this->getUser()) {;
             $this->addFlash('warning', ' Vous essayez d\'accéder à un profil qui n\'est pas le votre !');
         }
-
         return $this->render('pages/user_info/show.html.twig', [
             'user_info' => $userInfo,
             'user' => $currentUser,
