@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\InGroup;
 use App\Form\InGroupType;
 use App\Repository\GroupRepository;
+use App\Repository\InGroupRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class InGroupController extends AbstractController
 {
     #[Route('/in/group', name: 'app_in_group')]
-    public function index(): Response
+    public function index(GroupRepository $groupRepository, InGroupRepository $inGroupRepository): Response
     {
         return $this->render('pages/in_group/index.html.twig', [
-            'controller_name' => 'InGroupController',
+            'groups' => $groupRepository->findAll(),
+            'inGroup' => $inGroupRepository->findAll(),
         ]);
     }
 

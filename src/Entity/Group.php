@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\GroupRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Collection;
+
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
@@ -25,8 +27,8 @@ class Group
     #[ORM\JoinColumn(nullable: false)]
     private ?Book $id_book = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy:'groups')]
-    private $participants;
+    #[ORM\OneToMany(targetEntity: InGroup::class, mappedBy: 'group')]
+    private $inGroups;
 
     public function getId(): ?int
     {
@@ -67,5 +69,46 @@ class Group
 
         return $this;
     }
+/*
+    public function setInGroups(Collection $inGroups): self
+    {
+        $this->inGroups = $inGroups;
 
+        return $this;
+    }
+
+    public function getInGroups(): Collection
+    {
+        return $this->inGroups;
+    }
+
+    public function getUser(): Collection
+    {
+        return $this->inGroups->map(fn (InGroup $inGroup) => $inGroup->getUser());
+    }
+
+    public function setUser(Collection $users): self
+    {
+        foreach ($users as $user) {
+            $inGroup = new InGroup();
+            $inGroup->setUser($user);
+            $inGroup->setGroup($this);
+            $this->inGroups->add($inGroup);
+        }
+
+        return $this;
+    }
+ */   
+
+    public function getInGroups()
+    {
+        return $this->inGroups;
+    }
+
+    public function setInGroups($inGroups)
+    {
+        $this->inGroups = $inGroups;
+
+        return $this;
+    }
 }

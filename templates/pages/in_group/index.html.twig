@@ -19,12 +19,18 @@
 						<th>Participants</th>
 					</tr>
 				</thead>
+				{% for group in groups %}
 				<tbody>
-
-					<tr></tr>
-
+						
+					<td>
+						{{ group.name_group }}
+					</td>		
+					<td>
+						coming soon
+					</td>
+					
 				</tbody>
-
+				{% endfor %}
 			</table>
 		</div>
 		<div class="mt-4 mb-4 ml-4">

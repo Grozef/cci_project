@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Book
+{% block title %}Modification de {{ book.title }}
 {% endblock %}
 
 {% block body %}
 
 	<div class"container">
-		<h1 class="titre-site mt-4 ml-4">Edit Book</h1>
+		<h1 class="titre-site mt-4 ml-4">Modification de {{ book.title }}</h1>
 
 		{% for message in app.flashes('warning') %}
 			<div class="alert alert-warning mt-4">

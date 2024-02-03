@@ -1,40 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Group
+{% block title %} Le groupe {{ group.name_group}}
 {% endblock %}
 
 {% block body %}
-	<h1>Group</h1>
+	<div class="mt-4 mb-5 ml-4 titre-site">
+	<h1>Le groupe {{ group.name_group}}</h1>	
+	</div>
 
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ group.id }}</td>
-			</tr>
-			<tr>
-				<th>IdBook</th>
-				<td>{{ group.IdBook }}</td>
-			</tr>
-			<tr>
-				<th>IdUser</th>
-				<td>{{ group.IdUser }}</td>
-			</tr>
-			<tr>
-				<th>CreationDate</th>
-				<td>{{ group.CreationDate ? group.CreationDate|date('Y-m-d H:i:s') : '' }}</td>
-			</tr>
-			<tr>
-				<th>ReunionDate</th>
-				<td>{{ group.ReunionDate ? group.ReunionDate|date('Y-m-d H:i:s') : '' }}</td>
-			</tr>
-		</tbody>
-	</table>
+		{% for message in app.flashes('warning') %}
+			<div class="alert alert-warning mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-dismissible alert-success mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
 
-	<a href="{{ path('app_group_index') }}">back to list</a>
+	<div class="table-responsive-md">
+		<table class="table table-bordered blue mb-4 ml-4">
+			<tbody>
+			{% if is_granted('ROLE_ADMIN') %}
+				<tr>
+					<th>Id</th>
+					<td>{{ group.id }}</td>
+				</tr>
+			{% endif %}	
+				<tr>
+				{# renseigner idBook pour obtenir le tire du livre / Sujet de la réunion #}
+					<th>Livre</th>
+					<td>{{ group.idBook }}</td>
+				</tr>
+				<tr>
+					<th>Nom de la réunion</th>
+					<td>{{ group.name_group }}</td>
+				</tr>
+				<tr>
+					<th>Participants</th>
+					<td></td>
+				</tr>
+				<tr>
+					<th>Date de la réunion</th>
+					<td>{{ group.creationDate|date('Y-m-d') }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-	<a href="{{ path('app_group_edit', {'id': group.id}) }}">edit</a>
-
+<div class="mt-5">
+	<a href="{{ path('app_group_index') }}"
+	class="buttonbutton mb-4 ml-4 mt-5">Retour a la liste</a>
+</div>
+<div class="mt-5">
+	<a href="{{ path('app_group_edit', {'id': group.id}) }}"
+	class="buttonbuttonmodif mb-4 ml-4 mt-5">Modifier</a>
+</div>
+<div class="mb-4 ml-4">
 	{{ include('pages/group/_delete_form.html.twig') }}
+</div>
 {% endblock %}
 

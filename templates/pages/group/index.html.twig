@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Group index
+{% block title %}Liste des groupes
 {% endblock %}
 
 {% block body %}
@@ -8,6 +8,16 @@
 		<div class="mt-4 mb-5 ml-4 titre-site">
 			<h1>Liste des groupes</h1>
 		</div>
+		{% for message in app.flashes('warning') %}
+			<div class="alert alert-warning mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-dismissible alert-success mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
 		<div class="table-responsive-md">
 			<table class="table table-bordered blue mb-4 ml-4">
 				<thead>
@@ -34,7 +44,14 @@
 							{% endif %}
 							<td>{{ group.IdBook }}</td>
 							<td>{{ group.name_group }}</td>
-							<td>{#{{ group.IdUser }}   a brancher avec ingroup#}</td>
+							<td>
+								{% if is_granted('ROLE_USER') %}
+										coming soon
+								{% else %}
+									<h5 class="titre-site">vous ne pourrez voir les participants que lorceque vous serez inscrit !
+									</h5>
+								{% endif %}
+							</td>
 							<td>{{ group.CreationDate ? group.CreationDate|date('Y-m-d H:i:s') : '' }}</td>
 							{% if is_granted('ROLE_ADMIN')%}
 								<td>
@@ -56,8 +73,8 @@
 			{% if is_granted('ROLE_ADMIN') %}
 				<a href="{{ path('app_group_new') }}" class="buttonbuttonnew">Creation d'un groupe</a>
 				{#   <div class="mt-2">
-								{{ include('pages/group/_delete_form.html.twig') }}
-							</div>   #}
+																								{{ include('pages/group/_delete_form.html.twig') }}
+																							</div>   #}
 			{% endif %}
 		</div>
 	</div>
