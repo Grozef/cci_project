@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Group{% endblock %}
+{% block title %}Inscription dans un groupe
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Group</h1>
+	<div class="container ">
+		<div class="titre-site mt-4 mb-4">
+			<h1>Nouvelle inscription</h1>
+		</div>
 
-    {{ include('pages/group/_form.html.twig') }}
+		{{ include('pages/group/_form.html.twig') }}
 
-    <a href="{{ path('app_group_index') }}">back to list</a>
-{% endblock %}
+		<a href="{{ path('app_group_index') }}" class="buttonbutton mt-5">Retour a la liste</a>
+	{% endblock %}
+

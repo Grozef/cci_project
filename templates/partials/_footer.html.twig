@@ -1,28 +1,41 @@
+<!-- Site footer -->
+<footer class="site-footer mt-4">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 col-md-6">
+				<h6 class="titre-site mb-4">A propos :
+					<a href="{{ path('legals_erreur') }}">Formulaire de contact</a>
+				</h6>
 
-<section class="">
-  <!-- Footer -->
-  <footer class="text-center text-white" style="">
-    <!-- Grid container -->
-    <div class="container p-4 pb-0">
-      <!-- Section: CTA -->
-      <section class="">
-        <p class="d-flex justify-content-center align-items-center">
-          <span class="me-3">Register for free</span>
-          <button data-mdb-ripple-init type="button" class="btn btn-outline-light btn-rounded">
-            Sign up!
-          </button>
-        </p>
-      </section>
-      <!-- Section: CTA -->
-    </div>
-    <!-- Grid container -->
+				<p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by
+					<a href="{{ path('legals_erreur') }}">Lisowski François</a>
+				</p>
+			</div>
 
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(3, 2, 0, 0.2);">
-      © 2024 Copyright:
-      <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-    </div>
-    <!-- Copyright -->
-  </footer>
-  <!-- Footer -->
-</section>
+			<div class="col-xs-6 col-md-3">
+				<h6>Sites Connexes</h6>
+				<ul class="footer-links">
+					<li>
+						<a href="https://mediatheques.villeurbanne.fr/" target="blank">Médiathèques de Villeurbanne</a>
+					</li>
+					<li>
+						<a href="https://bm.mairie-vaulxenvelin.fr/" target="blank">Bibliothèques municipales de Vaulx-en-Velin</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-xs-6 col-md-3">
+				<h6>Liens Annexes</h6>
+				<ul class="footer-links">
+					<li>
+						<a href="{{ path('legals_confidentialite') }}">Politique de confidentialité</a>
+					</li>
+					<li>
+						<a href="{{ path('legals_mentions') }}">Mentions légales</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<hr>
+	</div>
+</footer>

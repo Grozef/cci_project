@@ -1,28 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}UserInfo index{% endblock %}
+{% block title %}Liste des utilisateurs 🥑 {% endblock %}
 
 {% block body %}
+
+<div class="container-fluid mb-4 mr-4">
     <h1 class="ml-4 mt-4">Liste des utilisateurs</h1>
 
-    {% for messages in app.flashes ('success') %}
-        <div class="alert alert-dismissible alert-success ml-4 mt-4">
-            {{ message}}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('warning') %}
-        <div class="alert alert-warning mt-4">
-            {{ message }}
-        </div>
-    {% endfor %}    
+{% for messages in app.flashes('success') %}
+    <div class="alert alert-dismissible alert-success ml-4 mt-4">
+        {{ messages }}
+    </div>
+{% endfor %}
+{% for message in app.flashes('warning') %}
+    <div class="alert alert-warning mt-4">
+        {{ message }}
+    </div>
+{% endfor %}
 
     {% if not user_infos is same as ([]) %}
     <div class="count ml-4 mt-4">
         <h5> Il y a {{ user_infos.getTotalItemCount }} Utilisateurs enregistrés </h5>
     </div>
     {% endif %}
-
-    <table class="table mt-4 ml-4">
+<div class="table-responsive-md">
+    <table class="table mt-4 ml-4 blue table-bordered">
         <thead>
             <tr class="table-active">
                 <th scope="row">Id</th>
@@ -57,10 +59,11 @@
                     <td>{{ user.email }}</td> 
                
                 <td>
-                    <a href="{{ path('app_user_info_show', {'id': user_info.id}) }}" class="btn btn-primary mt-4 mr-4">show</a>
-                    <a href="{{ path('app_user_info_edit', {'id': user_info.id}) }}" class="btn btn-warning mt-4">edit</a>
+                    <a href="{{ path('app_user_info_show', {'id': user_info.id}) }}" class="btn btn-primary mt-4 mr-4">Voir</a>
+                    <a href="{{ path('app_user_info_edit', {'id': user_info.id}) }}" class="btn btn-warning mt-4">Modifier</a>
                 </td>
             </tr>
+            
         {% else %}
             <tr>
                 <td colspan="7">no records found</td>
@@ -69,12 +72,16 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <div class="navigation d-flex justify-content-center mt-4">
-        <ul class="navigation d-flex justify-content-center mt-4">{{ knp_pagination_render(user_infos) }}</ul>    
     </div>
+<div class="containerpagination mt-4 mb-5">
+  <ul class="pagination">
+    <li class="mb-3">
+      <a href="#" class="previous"> {{ knp_pagination_render(users, '@KnpPaginator/Pagination/sliding.html.twig') }}</a>  {#{{ knp_pagination_render(users) }}#}
+    </li>
+  </ul>
+</div>
 
     <a href="{{ path('app_user_new') }}"
-    class="btn btn-primary mt-4 mr-4 ml-4 mb-4">Create new</a>
-
+    class="buttonbuttonnew ml-2 mt-5 mb-4">Creation</a>
+</div>
 {% endblock %}

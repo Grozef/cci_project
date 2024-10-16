@@ -20,17 +20,18 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-
+//this controller shows to an admin the list of the user's informations
 #[Route('/user/info')]
 class UserInfoController extends AbstractController
 {
     #[IsGranted("ROLE_USER")]
     #[Route('/', name: 'app_user_info_index', methods: ['GET'])]
-    public function index(UserInfoRepository $userInfoRepository,
-                        UserRepository $userRepository,
-                        PaginatorInterface $paginator,
-                        Request $request
-                        ): Response {
+    public function index(
+        UserInfoRepository $userInfoRepository,
+        UserRepository $userRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
 
         $user_infos = $paginator->paginate(
             $userInfoRepository->findAll(),
@@ -43,26 +44,27 @@ class UserInfoController extends AbstractController
             10
         );
 
-        if($this->isGranted('ROLE_ADMIN')){
+        if ($this->isGranted('ROLE_ADMIN')) {
             return $this->render('pages/user_info/index.html.twig', [
                 'user_infos' => $user_infos,
                 'users' => $users,
             ]);
-        }elseif($this->isGranted('ROLE_USER')){
+        } elseif ($this->isGranted('ROLE_USER')) {
             //Variable "user_info" a recupérer, render home ?
             $user = $this->getUser();
-                $this->addFlash('warning', ' Vous n\'avez pas accès à la liste des utilisateurs inscrits, contactez un Admin !');
-                return $this->render('pages/home.html.twig', [
-                    'user_infos' => $user_infos,
-                    'users' => $users,
-                    'user' => $user,
-                ]);        
+            $this->addFlash('warning', ' Vous n\'avez pas accès à la liste des utilisateurs inscrits, contactez un Admin !');
+            return $this->render('pages/home.html.twig', [
+                'user_infos' => $user_infos,
+                'users' => $users,
+                'user' => $user,
+            ]);
         }
         return $this->render('pages/user_info/index.html.twig', [
             'user_infos' => $userInfoRepository->findAll(),
         ]);
     }
 
+    // this controller allows an admin to create a new user and it's userInfos
     #[IsGranted("ROLE_ADMIN")]
     #[Route('/new', name: 'app_user_info_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -89,123 +91,31 @@ class UserInfoController extends AbstractController
         ]);
     }
 
+    // this controller shows the complementary informations about an user
     #[IsGranted("ROLE_USER")]
     #[Route('/{id}', name: 'app_user_info_show', methods: ['GET', 'POST'])]
     public function show(UserInfo $userInfo, User $user): Response
-    {   
-        $targetUser = $userInfo ->getId();
-
+    {
+        $currentUser = $this->getUser();
         if ($this->isGranted('ROLE_ADMIN')) {
             return $this->render('pages/user_info/show.html.twig', [
                 'user_info' => $userInfo,
                 'user' => $user,
             ]);
-        } elseif ($targetUser == $user->getId()) {
+        } elseif ($user == $this->getUser()) {
             return $this->render('pages/user_info/show.html.twig', [
                 'user_info' => $userInfo,
-                'user' => $user,
+                'user' => $currentUser,
             ]);
-        } elseif ($targetUser !== $user->getId()) {
+        } elseif ($user !== $this->getUser()) {;
             $this->addFlash('warning', ' Vous essayez d\'accéder à un profil qui n\'est pas le votre !');
         }
-        
         return $this->render('pages/user_info/show.html.twig', [
             'user_info' => $userInfo,
-            'user' => $user,
+            'user' => $currentUser,
 
         ]);
     }
-/*    A modifier pour pouvoir utiliser un formulaire et deux entités
-    #[IsGranted("ROLE_USER")]
-    #[Route('/{id}/edit', name: 'app_user_info_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, UserInfo $userInfo, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
-    {
-
-        $user = $this->getUser();
-        $form = $this->createForm(InfosType::class);
-        $form->handleRequest($request); 
-
-            if ($this->isGranted('ROLE_ADMIN')) {
-                    $form = $this->createForm(InfosType::class);
-                    $form->handleRequest($request);  
-
-                        if ($form->isSubmitted() && $form->isValid() ) { 
-                            if ($hasher->isPasswordValid($user, $form->getData()->getPlainPassword())) {
-                            $user = $form->getData();
-                            $userInfo = $form->getData();     
-                            $entityManager->persist($user);
-                            $entityManager->persist($userInfo);
-                            $entityManager->flush();
-
-                            $this->addFlash(
-                                'success',
-                                'Les informations de votre compte ont été modifiées avec succés'
-                            );
-                     return $this->redirectToRoute('app_user_info_show', [
-                            'user' => $user,
-                            'userInfo' => $userInfo,
-                            'form' => $form,
-                            'id' => $user->getId(),
-                        ]);
-                    } else {
-                        $this->addFlash(
-                            'warning',
-                            'Le mot de passe renseigné est incorrect'
-                        );
-                        return $this->redirectToRoute('app_user_info_edit', [
-                            'user' => $user,
-                            'id' => $user->getId()
-                        ]);
-                    }
-                }                  
-            } elseif ($this->isGranted('ROLE_USER')) {
-                if ($user == $this->getUser()){
-                    // dd('je suis ici');
-                    $form = $this->createFormBuilder()
-                    ->add('name', InfosType::class)
-                    ->getForm();
-                    //cacher le champs role à un simple User
-                    $form->remove('roles');
-                    $form->handleRequest($request);
-
-                if ($form->isSubmitted() && $form->isValid() ) { 
-                    $this->addFlash(
-                        'success',
-                        'Les informations de votre compte ont été modifiées avec succés'
-                    );
-
-                return $this->render('pages/user_info/show.html.twig', [
-                    'user' => $user,
-                    'user_info' => $userInfo,
-                    'form' => $form,
-                ]);
-            }              
-        } else {
-                $this->addFlash(
-                    'warning',
-                    'Le mot de passe renseigné est incorrect'
-                );
-                return $this->redirectToRoute('app_user_info_edit', [
-                    'user' => $user,
-                    'id' => $user->getId()
-                ]);
-            }
-        } elseif ($this->getUser() !== $user) {
-            $this->addFlash(
-                'warning',
-                'Vous essayez d\'accéder à des informations qui ne vous appartiennent pas !'
-            );
-            return $this->redirectToRoute('app_user_show', [
-                'user' => $user,
-                'id' => $user->getId()
-            ]);
-        }
-        return $this->render('pages/user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-}
-*/
 
     // this controller allows an user to edit it's own profile's informations
     // this controller allows an admin to modify anyone's profile informations
@@ -219,20 +129,20 @@ class UserInfoController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
- 
-                    $userInfo = $form->getData();
-                    $entityManager->persist($userInfo);
-                    $entityManager->flush();
 
-                    $this->addFlash(
-                        'success',
-                        'Les informations de votre compte ont été modifiées avec succés'
-                    );
-                    return $this->redirectToRoute('app_user_info_show', [
-                        'user' => $user,
-                        'id' => $user->getId()
-                    ]);
-                } 
+                $userInfo = $form->getData();
+                $entityManager->persist($userInfo);
+                $entityManager->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Les informations de ce compte ont été modifiées avec succés'
+                );
+                return $this->redirectToRoute('app_user_info_show', [
+                    'user' => $user,
+                    'id' => $user->getId()
+                ]);
+            }
         } elseif ($user == $this->getUser()) {
             $form = $this->createForm(UserInfoType::class, $userInfo);
             //cacher le champs role à un simple User
@@ -241,19 +151,19 @@ class UserInfoController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                    $userInfo = $form->getData();
-                    $entityManager->persist($userInfo);
-                    $entityManager->flush();
+                $userInfo = $form->getData();
+                $entityManager->persist($userInfo);
+                $entityManager->flush();
 
-                    $this->addFlash(
-                        'success',
-                        'Les informations de votre compte ont été modifiées avec succés'
-                    );
-                    return $this->redirectToRoute('app_user_info_show', [
-                        'user' => $user,
-                        'id' => $user->getId()
-                    ]);
-                } 
+                $this->addFlash(
+                    'success',
+                    'Les informations de votre compte ont été modifiées avec succés'
+                );
+                return $this->redirectToRoute('app_user_info_show', [
+                    'user' => $user,
+                    'id' => $user->getId()
+                ]);
+            }
         } elseif ($this->getUser() !== $user) {
             $this->addFlash(
                 'warning',
@@ -276,17 +186,17 @@ class UserInfoController extends AbstractController
     #[Route('/{id}', name: 'app_user_info_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserInfo $userInfo, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$userInfo->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $userInfo->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->remove($userInfo);
             $entityManager->flush();
 
             $this->addFlash(
                 'success',
-                'Vos informations ont bien été supprimées !'
+                'Le compte a bien été supprimé !'
             );
         }
 
-        return $this->redirectToRoute('app_user_info_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_info_index');
     }
 }

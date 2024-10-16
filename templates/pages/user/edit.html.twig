@@ -1,30 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Modification des informations de l'utilisateur ({{user.name}})
+{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="">Modification des informations de l'utilisateur ({{user.name}}) </h1>
-        {% for message in app.flashes('warning') %}
-            <div class="alert alert-warning mt-4">
-                {{ message }}
-            </div>
-        {% endfor %}
-        {% for messages in app.flashes ('success') %}
-        <div class="alert alert-dismissible alert-success ml-4 mt-4">
-            {{ message}}
-        </div>
-        {% endfor %} 
-            <div>
-                {{ include('pages/user/_form.html.twig', {'button_label': 'Update'}) }} 
-                
-        {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('app_user_index') }}"
-                class="btn btn-warning mt-4"> back to list</a>
+	<div class="container">
+		<h1 class="mt-4">Modification des informations de l'utilisateur ({{user.name}})
+		</h1>
+		{% for message in app.flashes('warning') %}
+			<div class="alert alert-warning mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for messages in app.flashes ('success') %}
+			<div class="alert alert-dismissible alert-success ml-4 mt-4">
+				{{ message}}
+			</div>
+		{% endfor %}
+		<div class="container">
+			{{ include('pages/user/_form.html.twig', {'button_label': 'Update'}) }}
 
-                {{ include('pages/user/_delete_form.html.twig') }}
-        {% endif %}
+			{% if is_granted('ROLE_ADMIN') %}
+				<a href="{{ path('app_user_info_index') }}" class="buttonbutton mt-4 mb-4">
+					Retour a la liste</a>
 
-        </div>
-    </div>
+				{{ include('pages/user/_delete_form.html.twig') }}
+			{% endif %}
+
+		</div>
+	</div>
 {% endblock %}
+

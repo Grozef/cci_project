@@ -1,38 +1,80 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Book{% endblock %}
+{% block title %} {{ book.title }}
+{% endblock %}
 
 {% block body %}
-    <h1>Book</h1>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto:wght@300&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ book.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ book.title }}</td>
-            </tr>
-            <tr>
-                <th>Author</th>
-                <td>{{ book.author }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ book.description }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ book.price }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<div class="container">
+		<h1 class="titre-site mt-4 ml-4">
+			{{ book.title}}
+		</h1>
 
-    <a href="{{ path('app_book_index') }}">back to list</a>
+		<main class="main-card">
+			<div class="card-card">
+				<img class="img-card" src="https://images.noosfere.org/couv/l/ldp24366-2023.jpg" alt="">
+				<div class="card-content-card">
+					<h2 class="h2-card">
+						{{ book.title }}
+					</h2>
+					<p class="p-card">
+						{{ book.description }}
+					</p>
+					<a href="#" class="button-card">
+						La suite ...
+						<span class="material-symbols-outlined-card">
+							arrow_right_alt
+						</span>
+					</a>
+				</div>
+			</div>
+		</main>
+	</div>
 
-    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
+	<div class="container">
+		<table class="table mb-4 darkblue">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ book.id }}</td>
+				</tr>
+				<tr>
+					<th>Title</th>
+					<td>{{ book.title }}</td>
+				</tr>
+				<tr>
+					<th>Author</th>
+					<td>{{ book.author }}</td>
+				</tr>
+				<tr>
+					<th>Description</th>
+					<td>{{ book.description }}</td>
+				</tr>
+				<tr>
+					<th>Price</th>
+					<td>{{ book.price }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="container">
+		<div class="mt-2 mb-4">
+			<a href="{{ path('app_book_index') }}" class="buttonbutton mt-4 mb-4">Retour à la liste</a>
+		</div>
+		{% if is_granted('ROLE_ADMIN') %}
+			<div class="mt-5">
+				<a href="{{ path('app_book_edit', {'id': book.id}) }}" class="buttonbuttonmodif">Modification</a>
+			</div>
+			<div class="mt-2">
+				{{ include('pages/book/_delete_form.html.twig') }}
+			</div>
+		{% endif %}
+	</div>
 
-    {{ include('pages/book/_delete_form.html.twig') }}
+
 {% endblock %}
+

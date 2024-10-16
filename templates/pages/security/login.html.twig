@@ -1,51 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SuperBouquin - Connexion
+{% block title %} Connexion
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1 class="mt-4">Formulaire de connexion</h1>
-        
-        {% if app.flashes('danger') is not empty %}
-            <div class="alert alert-danger mt-4">
-                {{ app.flashes('danger')|join('<br>') }}
-            </div>
-        {% endif %}
+	<div class="container darkblue">
+		<h1 class="mt-4">Formulaire de connexion</h1>
 
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success mt-4">
-                {{ message }}
-            </div>
-        {% endfor %}
+		{% for message in app.flashes('danger') %}
+			<div class="alert alert-danger mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
 
-        {% if error %}
-            <div class="alert alert-dismissible alert-danger">
-                {{ error.messagekey|trans(error.messageData, 'security') }}
-            </div>
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success mt-4">
+				{{ message }}
+			</div>
+		{% endfor %}
 
-        {% endif %}
+		{% if error %}
+			<div class="alert alert-dismissible alert-danger">
+				{{ error.messagekey|trans(error.messageData, 'security') }}
+			</div>
 
-        <form action="{{ path('security.login') }}" method="POST">
-            <div class="form-group">
-                <label for="username" class="form-label mt-4">Addresse email</label>
-                <input type="email" class="form-control" id="username" 
-                name="_username" placeholder="SuperBouquin@proton.me" value="{{ last_username }}">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-            <div class="form-group">
-                <label for="password" class="form-label mt-4">Mot de passe</label>
-                <input type="password" class="form-control" id="password" 
-                name="_password" placeholder="******" autocomplete="off">
-            </div>
+		{% endif %}
 
-            <button type="submit" class="btn btn-primary mt-4">
-                Se connecter
-            </button>
-        </form>
+		<form action="{{ path('security.login') }}" method="POST">
+			<div class="form-group">
+				<label for="username" class="form-label mt-4">Addresse email</label>
+				<input type="email" class="form-control" id="username" name="_username" placeholder="SuperBouquin@proton.me" value="{{ last_username }}">
+				<small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais cette information avec qui que ce soit.</small>
+			</div>
+			<div class="form-group">
+				<label for="password" class="form-label mt-4">Mot de passe</label>
+				<input type="password" class="form-control" id="password" name="_password" placeholder="******" autocomplete="off">
+			</div>
 
-    </div>
+			<button type="submit" class="buttonbutton mt-4 mb-4">
+				Se connecter
+			</button>
+		</form>
+
+	</div>
 
 {% endblock %}
-
 

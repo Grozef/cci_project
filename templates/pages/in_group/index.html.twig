@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription dans un groupe
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="mt-4 mb-4 titre-site">
+			<h1>Inscription dans un groupe</h1>
+		</div>
+		<div class="table-responsive-md">
+			<table class="table blue mb-5 ml-4">
+				<div class="mt-5 mb-5 ml-4 titre-site">
+					<h3>Groupes de lecture</h3>
+				</div>
+				<thead>
+					<tr>
+						<th>Réunion</th>
+						<th>Participants</th>
+					</tr>
+				</thead>
+				{% for group in groups %}
+				<tbody>
+						
+					<td>
+						{{ group.name_group }}
+					</td>		
+					<td>
+						coming soon
+					</td>
+					
+				</tbody>
+				{% endfor %}
+			</table>
+		</div>
+		<div class="mt-4 mb-4 ml-4">
+			<a href="{{ path('app_in_group_new') }}" class="buttonbutton">S'inscrire</a>
+		</div>
+	</div>
+
+{% endblock %}
+

@@ -6,19 +6,25 @@ use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/book')]
 class BookController extends AbstractController
 {
     #[Route('/', name: 'app_book_index', methods: ['GET'])]
-    public function index(BookRepository $bookRepository): Response
+    public function index(BookRepository $bookRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $books = $paginator->paginate(
+            $bookRepository->findAll(),
+            $request->query->getInt('page', 1),
+            4
+        );
         return $this->render('pages/book/index.html.twig', [
-            'books' => $bookRepository->findAll(),
+            'books' => $books,
         ]);
     }
 
@@ -81,10 +87,10 @@ class BookController extends AbstractController
     #[Route('/{id}', name: 'app_book_delete', methods: ['POST'])]
     public function delete(Request $request, Book $book, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$book->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('_token'))) {
             $entityManager->remove($book);
             $entityManager->flush();
-
+            // prevoir la supression du groupe si le livre est supprimé
             $this->addFlash(
                 'success',
                 'Vous avez bien supprimé votre livre !'

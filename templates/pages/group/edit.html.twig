@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Group{% endblock %}
+{% block title %}Modification du groupe {{ group.name_group }}
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Group</h1>
+	<div class="container mt-4 ml-4">
+		<h1 class="titre-site mt-4">Modification du groupe {{ group.name_group }}</h1>
+		<div class="container-fluid">
+			{{ include('pages/group/_form.html.twig', {'button_label': 'Update'}) }}
 
-    {{ include('pages/group/_form.html.twig', {'button_label': 'Update'}) }}
+			<a href="{{ path('app_group_index') }}" class="buttonbutton mb-5">Retour a la liste</a>
 
-    <a href="{{ path('app_group_index') }}">back to list</a>
-
-    {{ include('pages/group/_delete_form.html.twig') }}
+			{{ include('pages/group/_delete_form.html.twig') }}
+		</div>
+	</div>
 {% endblock %}
+

@@ -20,13 +20,13 @@ class BookType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                     'minlength' => '2',
                     'maxlength' => '255'
                 ],
                 'label' => 'Titre',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 255]),
@@ -35,13 +35,13 @@ class BookType extends AbstractType
             ])
             ->add('Author', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                     'minlength' => '2',
                     'maxlength' => '255'
                 ],
                 'label' => 'Auteur',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 255]),
@@ -50,13 +50,13 @@ class BookType extends AbstractType
             ])
             ->add('Description', TextareaType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                     'min' => 1,
                     'max' => 5
                 ],
                 'label' => 'Description',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -64,11 +64,11 @@ class BookType extends AbstractType
             ])
             ->add('price', MoneyType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control darkblue',
                 ],
                 'label' => 'Prix en ',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4 darkblue'
                 ],
                 'constraints' => [
                     new Assert\Positive(),
@@ -77,9 +77,9 @@ class BookType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4'
+                    'class' => 'buttonbuttonmodif mt-4 mb-4'
                 ],
-                'label' => 'Book'
+                'label' => 'Modifier'
             ])
         ;
     }

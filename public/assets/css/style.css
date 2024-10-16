@@ -1,0 +1,369 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,600,600italic");
+
+@font-face {
+  font-family: 'Dijkstra-Regular'; 
+  src: url('/assets/fonts/Dijkstra-Regular.ttf') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+html #html{ 
+    height : 100%;
+}
+
+body #body{
+    position: relative;
+    font-family: 'Dijkstra-Regular', sans-serif;
+}
+
+#main{
+    height: 100%;
+    min-height: calc(100vh - 250px);
+    overflow: hidden;
+    background-color:#85EDEE; 
+    background: linear-gradient(50deg, #85EDEE, #1E616C);
+  
+} 
+
+#footer{
+  height: 100px;
+  position: relative;  
+  bottom: 0;
+  /* background-color: #1E616C;*/
+} 
+
+.titre-site{
+  font-family:'Dijkstra-Regular', sans-serif;
+}
+
+.blue{
+    background-color:#1E616C; 
+    background: linear-gradient(90deg, #003335, black);
+    color:white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.blue-main{
+  background-color:#1E616C; 
+  background: linear-gradient(90deg, #003335, black);
+  color:white;
+  font-family: 'Dijkstra-Regular', sans-serif;
+  font-size: 1.4rem;
+}
+
+.lead{
+  font-size: 1.6rem;
+}
+
+.darkblue{
+    color: rgb(1, 1, 59);
+}
+
+/* page d'erreur */
+.erreur{
+    color: black;
+    text-align: center;
+    justify-content: center;
+}
+
+.erreurImage{
+    max-width: 100%;
+}
+
+.tbody{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*  pagination des listes user et user_info */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+#boutonNavBar{
+    color: #85EDEE;
+    background-color: white;
+    background-image: url('./../img/logo2.png');
+    background-size: 70px;
+    width: 70px;
+    height: 50px;
+    border: 2px solid;
+}
+
+/* card book */
+
+.main-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 280px;
+  min-height: 600px;
+  font-family: 'Dijkstra-Regular', sans-serif;
+}
+
+.card-card {
+  width: 24rem;
+  height: 36rem;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.card-card .img-card {
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.9;
+  transition: opacity .2s ease-out;
+}
+
+.card-card .h2-card {
+  position: absolute;
+  inset: auto auto 30px 30px;
+  margin: 0;
+  margin-left: -10px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgb(0, 0, 0, .6);
+  transition: inset .3s .3s ease-out;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: rgb(190, 190, 238);
+}
+
+.card-card .p-card, .card-card .a-card {
+  position: absolute;
+  opacity: 0;
+  max-width: 80%;
+  transition: opacity .3s ease-out;
+}
+
+.card-card .p-card {
+  inset: auto auto 80px 30px;
+  font-size: 30px;
+  background-color: rgb(0, 0, 0, .6);
+}
+
+.card-card .a-card {
+  inset: auto auto 40px 30px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-card:hover .h2-card {
+  inset: auto auto 220px 30px;
+  transition: inset .3s ease-out;
+  text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.card-card:hover .p-card, .card-card:hover .a-card {
+  opacity: 1;
+  transition: opacity .5s .1s ease-in;
+}
+
+.card-card:hover .img-card {
+  transition: opacity .3s ease-in;
+  opacity: 1;
+}
+
+.boutonsCard {
+ /* background-color: #003335; */
+ font-family: 'Dijkstra-Regular';
+}
+
+.btn-card-show{
+   color: #1E616C; 
+}
+
+
+/* boutons livres */
+
+.bodybutton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #050801;
+  font-family: 'Raleway', sans-serif;
+}
+
+.buttonbutton{
+padding: 15px 20px;
+background-color: #070133;
+color: rgb(190, 190, 238);
+font-weight: bold;
+border: none;
+border-radius: 10px;
+letter-spacing: 4px;
+overflow: hidden;
+transition: 0.5s;
+cursor: pointer;
+font-family: 'Dijkstra-Regular';
+}
+
+.buttonhome{
+  padding: 15px 20px;
+  background-color: #13067c;
+  color: rgb(190, 190, 238);
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  letter-spacing: 4px;
+  overflow: hidden;
+  transition: 0.5s;
+  cursor: pointer;
+  font-family: 'Dijkstra-Regular';
+  }
+
+.buttonbuttonmodif{
+  padding: 15px 20px;
+  background-color: #070133;
+  color: rgb(190, 190, 238);
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  letter-spacing: 4px;
+  overflow: hidden;
+  transition: 0.5s;
+  cursor: pointer;
+  font-family: 'Dijkstra-Regular';
+  }
+
+  .buttonbuttonnew{
+    padding: 15px 20px;
+    background-color: #070133;
+    color: rgb(190, 190, 238);
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    letter-spacing: 4px;
+    overflow: hidden;
+    transition: 0.5s;
+    cursor: pointer;
+    font-family: 'Dijkstra-Regular';
+    }
+    .buttonbuttondelete{
+      padding: 15px 20px;
+      background-color: #070133;
+      color: rgb(190, 190, 238);
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      letter-spacing: 4px;
+      overflow: hidden;
+      transition: 0.5s;
+      cursor: pointer;
+      font-family: 'Dijkstra-Regular';
+      }
+
+.buttonbutton:hover{
+  background: #0988f0;
+  color: #050801;
+  box-shadow: 0 0 5px #0988f0,
+              0 0 25px #0988f0,
+              0 0 50px #0988f0,
+              0 0 200px #0988f0;
+   -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+.buttonhome:hover{
+  background: #0988f0;
+  color: #0c40ba;
+  box-shadow: 0 0 5px #0988f0,
+              0 0 25px #0988f0,
+              0 0 50px #0988f0,
+              0 0 200px #0988f0;
+   -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+.buttonbuttonmodif:hover{
+  background: #f47b03;
+  color: #050801;
+  box-shadow: 0 0 5px #f47b03,
+              0 0 25px #f47b03,
+              0 0 50px #f47b03,
+              0 0 200px #f47b03;
+   -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+.buttonbuttonnew:hover{
+  background: #02f04d;
+  color: #050801;
+  box-shadow: 0 0 5px #02f04d,
+              0 0 25px #02f04d,
+              0 0 50px #02f04d,
+              0 0 200px #02f04d;
+   -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+.buttonbuttondelete:hover{
+  background: #d51111;
+  color: #080101;
+  box-shadow: 0 0 5px #d51111,
+              0 0 25px #d51111,
+              0 0 50px #d51111,
+              0 0 200px #d51111;
+   -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+/* pagination */  /* a peaufiner */
+ .containerpagination {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(23, 6, 184, 0.275), rgba(9, 183, 214, 0.286)); 
+  background-size: cover; 
+  background-position: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} 
+.pagination {
+  position: relative;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.05); 
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.3);  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+  border-radius: 2px;
+}
+.pagination li {
+  list-style-type: none;
+  display: inline-block;
+}
+.pagination li a {
+  position: relative;
+  padding: 20px 25px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+}
+.pagination li a:hover,
+.pagination li.active a {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* logo menu mobile */
+
+#logoMobile{
+  max-width: 45px;
+  max-height: 45px;
+  background-image: image('./../img/logo2.png');
+}

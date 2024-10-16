@@ -2,18 +2,22 @@
 
 namespace App\Form;
 
+use Assert\checked;
 use App\Entity\User;
+use App\Entity\UserInfo;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class RegistrationType extends AbstractType
 {
@@ -52,7 +56,7 @@ class RegistrationType extends AbstractType
                 ])
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control mb-4',
                     'minlength' => '2',
                     'maxlength' => '180'
                 ],
@@ -65,9 +69,12 @@ class RegistrationType extends AbstractType
                     new Assert\Email(),
                     new Assert\Length(['min'=>2, 'max'=> 180])
                 ]
-
-
             ])
+
+            ->add('userInfo', CollectionType::class, [
+                'entry_type' => AdditionnalType::class,
+            ])
+
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
@@ -81,7 +88,7 @@ class RegistrationType extends AbstractType
                 ],
                 'second_options' => [
                     'attr' => [
-                        'class' => 'form-control'
+                        'class' => 'form-control mb-4'
                     ],
                     'label' => 'Confirmation du mot de passe',
                     'label_attr' => [
@@ -90,10 +97,19 @@ class RegistrationType extends AbstractType
                 ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas'
             ])
+
+            ->add("recaptcha", ReCaptchaType::class, [
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+            ])
+
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4'
-                ]
+                    'class' => 'buttonbutton mt-4 mb-4'
+                ],
+                'label' => 'Enregistrer'
+
             ]);
         ;
     }

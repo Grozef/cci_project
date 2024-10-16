@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="#">Navbar</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+	{#	<a class="navbar-brand" href="#"></a>  #}
+		<button id="boutonNavBar" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
@@ -12,7 +12,6 @@
 						<!--<span class="visually-hidden">(current)</span> -->
 					</a>
 				</li>
-
 				<!-- tous les visiteurs -->
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('app_book_index') }}">Les livres
@@ -22,16 +21,14 @@
 					<a class="nav-link" href="{{ path('app_group_index') }}">Les groupes de lecture
 					</a>
 				</li>
-
 				<!-- Tous les utilisateurs -->
 				{% if app.user %}
-
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_user_info_show', {id : app.user.id}) }}">Mon profil
+						<a class="nav-link" href="{{ path('app_in_group') }}">S'inscrire dans un groupe
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_group_index') }}">inscription reunion a brancher
+						<a class="nav-link" href="{{ path('app_user_info_show', {id : app.user.id}) }}">Mon profil
 						</a>
 					</li>
 					<!-- Tous les admins -->
@@ -41,17 +38,12 @@
 							<a class="nav-link" href="{{ path('app_user_info_index') }}">Les utilisateurs
 							</a>
 						</li>
-
 					{% endif %}
 				{% endif %}
-
-
 			</ul>
 			<div class="d-flex">
 				<ul class="navbar-nav me-auto">
-
 					{% if app.user %}
-
 						<li class="nav-item dropdown" style="margin-right: 5rem;">
 							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.name }}</a>
 							<div class="dropdown-menu">
@@ -61,9 +53,7 @@
 								<a class="dropdown-item" href="{{ path('security.logout') }}">Déconnexion</a>
 							</div>
 						</li>
-
 					{% else %}
-
 						<li class="nav-item">
 							<a class="nav-link" href="{{ path('security.login') }}">Connexion
 							</a>
@@ -72,11 +62,10 @@
 							<a class="nav-link" href="{{ path('security.registration') }}">Inscription
 							</a>
 						</li>
-
 					{% endif %}
-
 				</ul>
 			</div>
 		</div>
 	</div>
 </nav>
+

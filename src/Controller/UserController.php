@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Entity\UserInfo;
+use App\Form\AdditionnalType;
 use App\Form\UserPasswordType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,16 +33,16 @@ class UserController extends AbstractController
             $request->query->getInt('page', 1),
             10
         );
-        if($this->isGranted('ROLE_ADMIN')){
+        if ($this->isGranted('ROLE_ADMIN')) {
             return $this->render('pages/user/index.html.twig', [
                 'users' => $users,
             ]);
-        }elseif($this->isGranted('ROLE_USER')){
+        } elseif ($this->isGranted('ROLE_USER')) {
             $user = $this->getUser();
-                $this->addFlash('warning', ' Vous n\'avez pas accès à la liste des utilisateurs inscrits, contactez un Admin !');
-                return $this->render('pages/user/show.html.twig', [
-                    'user' => $user,
-                ]);        
+            $this->addFlash('warning', ' Vous n\'avez pas accès à la liste des utilisateurs inscrits, contactez un Admin !');
+            return $this->render('pages/user/show.html.twig', [
+                'user' => $user,
+            ]);
         }
         return $this->render('pages/home.html.twig');
     }
@@ -49,21 +50,35 @@ class UserController extends AbstractController
     // This controller allow an admin to create a new user
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
+
+        $form->add('userInfo', AdditionnalType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Retrieve User
+            $user = $form->getData();
+            // Retrieve the userInfo object from the form
+            $userInfo = $form['userInfo']->getData();
+            $user->setUserInfo($userInfo);
+            // Hash the user's password
+            // dd($user, $userInfo);
+            $hashedPassword = $hasher->hashPassword($user, $user->getPlainPassword());
+            $user->setPassword($hashedPassword);
+
             $entityManager->persist($user);
+            $userInfo->setRelation($user);
+            $entityManager->persist($userInfo);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', ' Le compte a bien été créé !');
+            return $this->render('pages/user/show.html.twig', [
+                'user' => $user,
+            ]);
         }
-
         return $this->render('pages/user/new.html.twig', [
-            'user' => $user,
             'form' => $form,
         ]);
     }
@@ -156,7 +171,6 @@ class UserController extends AbstractController
                         'id' => $user->getId()
                     ]);
                 }
-
             }
         } elseif ($this->getUser() !== $user) {
             $this->addFlash(
@@ -175,8 +189,6 @@ class UserController extends AbstractController
     }
 
     // This controller allows an admin to delete an user's profile
-
-    // a ameliorer pour delete les deux entites en meme temps
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserInfo $userInfo, EntityManagerInterface $entityManager): Response
@@ -191,8 +203,7 @@ class UserController extends AbstractController
                 'Ce compte a été supprimé avec succés !'
             );
         }
-        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-        
+        return $this->redirectToRoute('app_user_info_index');
     }
 
     //this controller allows an user to modify it's own password
@@ -204,7 +215,7 @@ class UserController extends AbstractController
         UserPasswordHasherInterface $hasher,
         EntityManagerInterface $manager
     ): Response {
-        
+
         $currentUser = $this->getUser();
         $form = $this->createForm(UserPasswordType::class);
         $form->handleRequest($request);
@@ -221,12 +232,12 @@ class UserController extends AbstractController
         }
         if ($form->isSubmitted() && $form->isValid()) {
             if ($hasher->isPasswordValid($user, $form->getData()['plainPassword'])) {
-                
+
                 // Si bug symfony, si le preUpdate ne flush pas la donnée
                 $user->setPassword(
                     $hasher->hashPassword(
-                    $user,
-                    $form->getData()['newPassword']
+                        $user,
+                        $form->getData()['newPassword']
                     )
                 );
                 // verifier avec l'eventListener
@@ -253,6 +264,10 @@ class UserController extends AbstractController
                 return $this->render('pages/user/edit_password.html.twig', [
                     'form' => $form->createView()
                 ]);
+            }
+        } else {
+            if (!$form->get('recaptcha')->getData() && $form->isSubmitted()) {
+                $this->addFlash('warning', 'Le champ reCAPTCHA doit être coché.');
             }
         }
 
