@@ -1,0 +1,69 @@
+version: '3.8'
+
+services: # Définit les différents services à exécuter
+  database: # Service pour la base de données MySQL
+    image: mysql:8.0  # Utilise l'image MySQL version 8.0
+    environment:  # Variables d'environnement pour configurer MySQL
+      MYSQL_ROOT_PASSWORD: root_password # Mot de passe pour l'utilisateur root
+      MYSQL_DATABASE: database_name # Nom de la base de données à créer
+      MYSQL_USER: user # Nom d'un utilisateur supplémentaire
+      MYSQL_PASSWORD: password # Mot de passe de l'utilisateur supplémentaire
+    ports:
+      - "3307:3306" # Redirige le port 3306 de MySQL vers le port 3307 de l'hôte
+    healthcheck: # Vérification de la santé du conteneur MySQL
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-proot_password"]
+      interval: 10s # Vérifie la santé toutes les 10 secondes
+      retries: 5 # Recommence 5 fois avant de déclarer le service comme non sain
+
+  app:  # Service pour l'application Symfony
+    build:  # Configuration pour construire l'image Docker de l'application
+      context: .  # Indique le contexte de construction (répertoire courant)
+      dockerfile: Dockerfile  # Spécifie le fichier Dockerfile à utiliser
+    depends_on: # Dépendance du service app au service database
+      database:
+        condition: service_healthy  # Attendre que la base de données soit prête avant de démarrer l'application
+    ports:
+      - "8080:80" # Redirige le port 80 de l'application vers le port 8080 de l'hôte
+    volumes:
+      - .:/var/www/html # Monte le répertoire courant dans le conteneur pour le développement
+
+  phpmyadmin: # Service pour phpMyAdmin
+    image: phpmyadmin/phpmyadmin:5.2.1  # Utilise l'image phpMyAdmin
+    environment:  # Variables d'environnement pour configurer phpMyAdmin
+      PMA_HOST: database  # Indique l'hôte de la base de données
+      PMA_USER: root #user  # Utilisateur à utiliser pour se connecter à MySQL
+      PMA_PASSWORD: root_password #password  # Mot de passe de l'utilisateur
+      MYSQL_ROOT_PASSWORD: root # Mot de passe pour l'utilisateur root  
+    ports:
+      - "8081:80" # Redirige le port 80 de phpMyAdmin vers le port 8081 de l'hôte
+    depends_on:
+      - database  # Dépendance du service phpMyAdmin au service database
+
+  mailer: # Service pour MailHog (outil de test d'e-mails)
+    image: mailhog/mailhog  # Utilise l'image MailHog
+    restart: always # Redémarre le conteneur automatiquement en cas d'échec
+    ports:
+      - "1025:1025" # Redirige le port 1025 pour les e-mails sortants
+      - "8025:8025" # Redirige le port 8025 pour l'interface web de MailHog
+    networks:
+      - la_tata_sasa_symfony-network  # Associe le service à un réseau spécifique
+
+networks: # Définit les réseaux utilisés par les services
+  la_tata_sasa_symfony-network: # Nom du réseau
+    driver: bridge  # Utilise le driver de pont par défaut
+
+volumes:  # Définit les volumes utilisés par les services
+  db_data:  # Nom d'un volume pour stocker les données de la base de données
+
+# ne pas oublier de changer le .env si dev local et pas docker
+
+# demarrer le volume avec la commande "docker-compose up -d --build"
+# arreter les containers avec la commande "docker-compose down"
+# lister les containers actifs avec la commande "docker ps"
+# supprimer les images en trop/ non utilisées "docker system prune -a --volumes"
+
+# Pour l'application Symfony : Accédez à http://localhost:8080.
+# Pour phpMyAdmin : Accédez à http://localhost:8081.
+
+# exemple de commande dans ce container
+# docker-compose exec app php bin/console make:migration
